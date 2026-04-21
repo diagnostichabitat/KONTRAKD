@@ -1,7 +1,15 @@
 import { GoogleGenAI, ThinkingLevel, Type } from "@google/genai";
 
-const apiKey = process.env.GEMINI_API_KEY;
-const genAI = new GoogleGenAI({ apiKey: apiKey! });
+let _genAI: GoogleGenAI | null = null;
+function getGenAI(): GoogleGenAI {
+  if (_genAI) return _genAI;
+  const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error("GEMINI_API_KEY is not configured");
+  }
+  _genAI = new GoogleGenAI({ apiKey });
+  return _genAI;
+}
 
 export interface ImageGenOptions {
   prompt: string;
@@ -53,7 +61,7 @@ Rules:
 - Use French
 - No markdown, no explanation, ONLY the JSON`;
 
-    const response = await genAI.models.generateContent({
+    const response = await getGenAI().models.generateContent({
       model: "gemini-3-flash-preview", // Use flash for speed (JSON extraction)
       contents: [{
         role: "user",
@@ -82,7 +90,7 @@ Rules:
  */
 export async function getLocalRenovationIntelligence(area: string, industry: string) {
   try {
-    const response = await (genAI.models as any).generateContent({
+    const response = await (getGenAI().models as any).generateContent({
       model: "gemini-3-flash-preview",
       contents: [{
         role: "user",
@@ -164,7 +172,7 @@ export async function generateVisual(options: ImageGenOptions) {
       });
     }
 
-    const response = await genAI.models.generateContent({
+    const response = await getGenAI().models.generateContent({
       model: "gemini-3-pro-image-preview",
       contents,
       config: {
