@@ -1,0 +1,7 @@
+/* for SPAs on Netlify */
+/* Redirects all traffic to index.html so React Router can handle routing */
+/* This prevents 404 errors on refresh when using client-side routing */
+/* Useful even if not using a router currently, as it handles paths correctly */
+/* https://docs.netlify.com/routing/redirects/rewrites-proxies/#history-pushstate-and-single-page-apps */
+
+/*    /index.html   200
