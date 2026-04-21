@@ -1,7 +1,21 @@
 import { GoogleGenAI, ThinkingLevel, Type } from "@google/genai";
 
-const apiKey = process.env.GEMINI_API_KEY;
-const genAI = new GoogleGenAI({ apiKey: apiKey! });
+let genAIInstance: GoogleGenAI | null = null;
+
+/**
+ * Lazy initialization of GoogleGenAI client to prevent module-load errors 
+ * when the API key is missing.
+ */
+export function getGenAI() {
+  if (!genAIInstance) {
+    const key = process.env.API_KEY || process.env.GEMINI_API_KEY;
+    if (!key) {
+      throw new Error("Clé API manquante. Veuillez configurer GEMINI_API_KEY.");
+    }
+    genAIInstance = new GoogleGenAI({ apiKey: key });
+  }
+  return genAIInstance;
+}
 
 export interface ImageGenOptions {
   prompt: string;
@@ -53,8 +67,8 @@ Rules:
 - Use French
 - No markdown, no explanation, ONLY the JSON`;
 
+    const genAI = getGenAI();
     const response = await genAI.models.generateContent({
-      model: "gemini-3-flash-preview", // Use flash for speed (JSON extraction)
       contents: [{
         role: "user",
         parts: [
@@ -82,6 +96,7 @@ Rules:
  */
 export async function getLocalRenovationIntelligence(area: string, industry: string) {
   try {
+    const genAI = getGenAI();
     const response = await (genAI.models as any).generateContent({
       model: "gemini-3-flash-preview",
       contents: [{
@@ -106,8 +121,8 @@ export async function generateRenovationVideo(base64Image: string, style: string
     const [mimeType, data] = base64Image.split(";base64,");
     const mime = mimeType.replace("data:", "");
 
-    // Use a fresh instance to ensure the latest API key from the dialog is used
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || process.env.GEMINI_API_KEY! });
+    // Use the lazy helper to ensure key is valid or throw a clear error
+    const ai = getGenAI();
 
     let operation = await ai.models.generateVideos({
       model: "veo-3.1-generate-preview",
@@ -164,6 +179,7 @@ export async function generateVisual(options: ImageGenOptions) {
       });
     }
 
+    const genAI = getGenAI();
     const response = await genAI.models.generateContent({
       model: "gemini-3-pro-image-preview",
       contents,

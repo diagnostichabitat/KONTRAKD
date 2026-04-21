@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { CheckCircle2, ArrowRight, Target, Briefcase, AlertTriangle, Sparkles, MapPin, Loader2, Zap } from "lucide-react";
-import { GoogleGenAI } from "@google/genai";
+import { getGenAI } from "@/lib/gemini";
 import Markdown from "react-markdown";
 import { cn } from "@/lib/utils";
 
@@ -37,7 +37,7 @@ export function OfferRecommender() {
     setIsLoading(true);
     setStep(5);
     try {
-      const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
+      const genAI = getGenAI();
       
       const prompt = `You are a world-class strategic consultant for high-end renovation businesses. 
       You are performing an "Irresistible Offer Audit" for a professional in ${selections.city}.
