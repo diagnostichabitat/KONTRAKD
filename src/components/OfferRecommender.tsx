@@ -37,7 +37,18 @@ export function OfferRecommender() {
     setIsLoading(true);
     setStep(5);
     try {
-      const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
+      const readEnv = (key: string): string | undefined => {
+        try {
+          if (typeof process !== "undefined" && process.env && process.env[key]) return process.env[key];
+        } catch {}
+        try {
+          const meta = (import.meta as any);
+          if (meta?.env?.[key]) return meta.env[key];
+          if (meta?.env?.[`VITE_${key}`]) return meta.env[`VITE_${key}`];
+        } catch {}
+        return undefined;
+      };
+      const genAI = new GoogleGenAI({ apiKey: readEnv("GEMINI_API_KEY") || readEnv("API_KEY") || "" });
       
       const prompt = `You are a world-class strategic consultant for high-end renovation businesses. 
       You are performing an "Irresistible Offer Audit" for a professional in ${selections.city}.

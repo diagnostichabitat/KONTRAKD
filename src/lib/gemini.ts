@@ -1,7 +1,26 @@
 import { GoogleGenAI, ThinkingLevel, Type } from "@google/genai";
 
-const apiKey = process.env.GEMINI_API_KEY;
-const genAI = new GoogleGenAI({ apiKey: apiKey! });
+const readEnv = (key: string): string | undefined => {
+  try {
+    if (typeof process !== "undefined" && process.env && process.env[key]) {
+      return process.env[key];
+    }
+  } catch {}
+  try {
+    const meta = (import.meta as any);
+    if (meta?.env?.[key]) return meta.env[key];
+    if (meta?.env?.[`VITE_${key}`]) return meta.env[`VITE_${key}`];
+  } catch {}
+  return undefined;
+};
+
+const getApiKey = () => readEnv("GEMINI_API_KEY") || readEnv("API_KEY") || "";
+
+let _genAI: GoogleGenAI | null = null;
+const getGenAI = () => {
+  if (!_genAI) _genAI = new GoogleGenAI({ apiKey: getApiKey() });
+  return _genAI;
+};
 
 export interface ImageGenOptions {
   prompt: string;
@@ -53,7 +72,7 @@ Rules:
 - Use French
 - No markdown, no explanation, ONLY the JSON`;
 
-    const response = await genAI.models.generateContent({
+    const response = await getGenAI().models.generateContent({
       model: "gemini-3-flash-preview", // Use flash for speed (JSON extraction)
       contents: [{
         role: "user",
@@ -82,7 +101,7 @@ Rules:
  */
 export async function getLocalRenovationIntelligence(area: string, industry: string) {
   try {
-    const response = await (genAI.models as any).generateContent({
+    const response = await (getGenAI().models as any).generateContent({
       model: "gemini-3-flash-preview",
       contents: [{
         role: "user",
@@ -107,7 +126,7 @@ export async function generateRenovationVideo(base64Image: string, style: string
     const mime = mimeType.replace("data:", "");
 
     // Use a fresh instance to ensure the latest API key from the dialog is used
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || process.env.GEMINI_API_KEY! });
+    const ai = new GoogleGenAI({ apiKey: getApiKey() });
 
     let operation = await ai.models.generateVideos({
       model: "veo-3.1-generate-preview",
@@ -135,7 +154,7 @@ export async function generateRenovationVideo(base64Image: string, style: string
       const response = await fetch(downloadLink, {
         method: 'GET',
         headers: {
-          'x-goog-api-key': process.env.API_KEY || process.env.GEMINI_API_KEY!,
+          'x-goog-api-key': getApiKey(),
         },
       });
       
@@ -164,7 +183,7 @@ export async function generateVisual(options: ImageGenOptions) {
       });
     }
 
-    const response = await genAI.models.generateContent({
+    const response = await getGenAI().models.generateContent({
       model: "gemini-3-pro-image-preview",
       contents,
       config: {
