@@ -439,7 +439,7 @@ export function Demo() {
                   <div className="bg-accent p-3 rounded-full mb-4 shadow-2xl">
                     <Loader2 size={32} className="text-white animate-spin" />
                   </div>
-                  <p className="text-white font-black text-lg uppercase italic tracking-tighter">Votre transformation est prête.</p>
+                  <p className="text-white font-black text-lg uppercase italic tracking-tight">Votre transformation est prête.</p>
                   <p className="text-white/80 text-[10px] font-bold uppercase tracking-widest mt-2">Débloquez le résultat haute-fidélité</p>
                 </div>
               )}
@@ -494,7 +494,7 @@ export function Demo() {
                 </div>
 
                 <Button 
-                  className="w-full bg-accent hover:bg-accent/90 h-14 text-lg font-black italic group shadow-xl shadow-accent/20 relative z-10"
+                  className="w-full bg-accent hover:bg-accent/90 min-h-[3.5rem] h-auto py-3 text-sm sm:text-base md:text-lg font-black italic group shadow-xl shadow-accent/20 relative z-10 flex items-center justify-center gap-2 px-4 whitespace-normal leading-tight"
                   onClick={() => {
                     if (leadData.name && leadData.email) {
                       setLeadCaptured(true);
@@ -563,7 +563,7 @@ export function Demo() {
                 <div className="grid grid-cols-2 gap-3">
                   <Button 
                     variant="outline" 
-                    className="h-12 border-accent text-accent hover:bg-accent/5 font-bold text-xs uppercase tracking-widest group"
+                    className="h-auto min-h-12 border-accent text-accent hover:bg-accent/5 font-bold text-[10px] md:text-xs uppercase tracking-widest group whitespace-normal leading-tight py-2 px-3"
                     onClick={handleGenerateVideo}
                     disabled={isGeneratingVideo || !!videoUrl}
                   >
@@ -575,7 +575,7 @@ export function Demo() {
                     ) : (
                       <>
                         <Video size={16} className="mr-2 group-hover:scale-110 transition-transform" />
-                        Visite 3D Directe
+                        Vidéo 3D
                       </>
                     )}
                   </Button>
@@ -593,7 +593,7 @@ export function Demo() {
                       <p className="text-accent font-black text-lg uppercase italic tracking-tight">Votre client vient de voir son résultat.</p>
                       <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest">Signez maintenant.</p>
                    </div>
-                   <Button className="w-full bg-accent hover:bg-accent/90 py-8 text-sm md:text-lg font-black shadow-2xl shadow-accent/25 uppercase tracking-tighter italic whitespace-normal h-auto leading-tight" onClick={() => window.location.href = '#pricing'}>
+                   <Button className="w-full bg-accent hover:bg-accent/90 py-8 text-sm md:text-lg font-black shadow-2xl shadow-accent/25 uppercase tracking-tight italic whitespace-normal h-auto leading-tight" onClick={() => window.location.href = '#pricing'}>
                     DÉPLOYER CECI DANS MON ENTREPRISE
                   </Button>
                 </div>
