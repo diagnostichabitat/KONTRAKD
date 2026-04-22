@@ -50,7 +50,7 @@ export default function App() {
       </nav>
 
       {/* Hero Section */}
-      <section id="demo" className="relative pt-12 md:pt-32 pb-8 md:pb-20 px-6 overflow-hidden glow-mesh">
+      <section id="demo" className="relative pt-28 md:pt-32 pb-8 md:pb-20 px-6 overflow-hidden glow-mesh">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-8 md:gap-16 text-center md:text-left">
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
@@ -492,7 +492,7 @@ export default function App() {
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-accent text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl z-30 whitespace-nowrap">Leader Local</div>
               
               <div className="space-y-2 text-center md:text-left">
-                <h4 className="text-4xl font-display font-black uppercase tracking-tighter italic">SYSTÈME DE DOMINATION</h4>
+                <h4 className="text-2xl md:text-3xl font-display font-black uppercase tracking-tight italic">SYSTÈME DE DOMINATION</h4>
                 <p className="text-sm text-white/50 font-bold uppercase tracking-widest">Pour être le seul artisan de votre métier dans votre ville.</p>
               </div>
 
@@ -515,7 +515,7 @@ export default function App() {
             {/* Croissance (Entry) */}
             <Card className="flex-1 p-10 space-y-8 border border-muted/20 shadow-xl bg-white text-ink rounded-[40px] flex flex-col md:order-1 overflow-visible">
               <div className="space-y-2 text-center md:text-left">
-                <h4 className="text-4xl font-display font-black uppercase tracking-tighter italic">PACK ARTISAN</h4>
+                <h4 className="text-2xl md:text-3xl font-display font-black uppercase tracking-tight italic">PACK ARTISAN</h4>
                 <p className="text-sm text-muted-foreground font-bold uppercase tracking-widest">Pour signer plus de chantiers cette semaine.</p>
               </div>
 
@@ -549,7 +549,7 @@ export default function App() {
         <div className="absolute inset-0 bg-accent/5 pointer-events-none" />
         <div className="max-w-4xl mx-auto relative z-10 text-center space-y-12">
           <div className="space-y-6">
-            <h2 className="text-4xl md:text-7xl font-display font-black uppercase tracking-tighter italic">Votre ville est-elle <br /> encore disponible ?</h2>
+            <h2 className="text-2xl md:text-5xl font-display font-black uppercase tracking-tight italic text-balance">Votre ville est-elle encore disponible ?</h2>
             
             <div className="flex flex-col items-center gap-4">
               <div className="bg-white/5 border border-white/10 px-6 py-3 rounded-full flex items-center gap-4 shadow-2xl">
