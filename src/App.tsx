@@ -50,7 +50,7 @@ export default function App() {
       </nav>
 
       {/* Hero Section */}
-      <section id="demo" className="relative pt-24 md:pt-32 pb-12 md:pb-20 px-6 overflow-hidden glow-mesh">
+      <section id="demo" className="relative pt-12 md:pt-32 pb-8 md:pb-20 px-6 overflow-hidden glow-mesh">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-8 md:gap-16 text-center md:text-left">
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
@@ -239,7 +239,7 @@ export default function App() {
       </section>
 
       {/* Success Story / Le Parquet Parisien */}
-      <section id="case-study" className="py-24 px-6 bg-ink text-white">
+      <section id="case-study" className="py-12 md:py-24 px-6 bg-ink text-white">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <motion.div {...fadeInUp} className="order-2 lg:order-1 relative">
@@ -307,7 +307,7 @@ export default function App() {
       </section>
 
       {/* How It Works */}
-      <section id="how-it-works" className="py-24 bg-muted/20 px-6 overflow-hidden">
+      <section id="how-it-works" className="py-12 md:py-24 bg-muted/20 px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20 space-y-4">
             <h2 className="text-4xl font-display font-black uppercase tracking-tight">COMMENT ÇA MARCHE</h2>
@@ -366,7 +366,7 @@ export default function App() {
       </section>
 
       {/* FAQ / Objection / Hesitation */}
-      <section className="py-24 bg-ink text-white/70 px-6 border-t border-white/10">
+      <section className="py-12 md:py-24 bg-ink text-white/70 px-6 border-t border-white/10">
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16">
           {/* Desktop Version */}
           <div className="hidden md:block space-y-6">
@@ -411,8 +411,8 @@ export default function App() {
       </div>
 
       {/* Pricing Section - The Money Decision */}
-      <section id="pricing" className="py-24 px-6 relative bg-white">
-        <div className="max-w-7xl mx-auto space-y-24">
+      <section id="pricing" className="py-12 md:py-24 px-6 relative bg-white">
+        <div className="max-w-7xl mx-auto space-y-12 md:space-y-24">
           
           {/* Battle-Tested High-Conversion Reframe */}
           <div className="max-w-5xl mx-auto rounded-[3rem] bg-ink/5 border border-muted/20 overflow-hidden shadow-2xl">
@@ -479,7 +479,7 @@ export default function App() {
           </div>
 
           {/* Section Header */}
-          <div className="max-w-4xl mx-auto text-center space-y-4 mb-20 px-6">
+          <div className="max-w-4xl mx-auto text-center space-y-4 mb-10 md:mb-20 px-6">
             <h2 className="text-4xl md:text-6xl font-display font-black uppercase italic tracking-tighter">Choisissez comment vous voulez travailler.</h2>
             <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Un seul artisan par ville. Si votre concurrent signe avant vous, votre ville est prise.</p>
           </div>
@@ -536,7 +536,7 @@ export default function App() {
             </Card>
           </div>
 
-          <div className="text-center py-20">
+          <div className="text-center py-8 md:py-20">
             <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground opacity-60 italic">
               Investissement calibré selon votre ville et votre secteur.
             </p>
@@ -545,7 +545,7 @@ export default function App() {
       </section>
 
       {/* FINAL CTA BLACK SECTION */}
-      <section className="py-32 px-6 bg-ink text-white relative overflow-hidden">
+      <section className="py-16 md:py-32 px-6 bg-ink text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-accent/5 pointer-events-none" />
         <div className="max-w-4xl mx-auto relative z-10 text-center space-y-12">
           <div className="space-y-6">
