@@ -110,8 +110,8 @@ export function OfferRecommender() {
                   onClick={() => { setSelections({ ...selections, business: opt.id }); nextStep(); }}
                   className="relative group h-32 md:h-auto md:aspect-square rounded-[2rem] md:rounded-[3rem] overflow-hidden border border-white/10 transition-all active:scale-[0.98] hover:border-accent/50"
                 >
-                  <img src={opt.image} alt={opt.label} className="absolute inset-0 w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-60 group-hover:scale-110 transition-all duration-700" referrerPolicy="no-referrer" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent md:bg-ink/60 md:group-hover:bg-ink/40 transition-colors" />
+                  <img src={opt.image} alt={opt.label} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700" referrerPolicy="no-referrer" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent md:bg-ink/40 md:group-hover:bg-ink/20 transition-colors" />
                   
                   <div className="relative h-full flex items-center justify-between md:justify-center p-8 md:p-6 md:flex-col gap-4">
                     <span className="font-display font-black text-2xl md:text-xs uppercase tracking-widest md:tracking-[0.3em] text-white/90 group-hover:text-white drop-shadow-lg">{opt.label}</span>

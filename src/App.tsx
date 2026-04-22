@@ -13,10 +13,12 @@ import {
   Sparkles,
   ChevronRight,
   MessageCircle,
+  AlertTriangle,
   X
 } from "lucide-react";
 import { Demo } from "@/components/Demo";
 import { OfferRecommender } from "@/components/OfferRecommender";
+import { cn } from "@/lib/utils";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -395,42 +397,67 @@ export default function App() {
       <section id="pricing" className="py-24 px-6 relative bg-white">
         <div className="max-w-7xl mx-auto space-y-24">
           
-          {/* Emotional + Financial Hook */}
-          <div className="max-w-4xl mx-auto text-center space-y-8">
-            <Badge variant="outline" className="border-red-500 text-red-500 font-black uppercase px-4 py-1">Alerte : Fuite de Revenus</Badge>
-            <h2 className="text-4xl md:text-7xl font-display font-black uppercase tracking-tight leading-none">
-              Chaque seconde d'hésitation vous coûte <span className="text-red-500 italic">une signature.</span>
-            </h2>
-            <div className="flex flex-col md:flex-row gap-8 justify-center items-center py-10 border-y border-muted/20">
-              <div className="text-center md:text-left">
-                <p className="text-[10px] uppercase font-bold text-muted-foreground">La Réalité Brutale</p>
-                <p className="text-xl font-medium italic">"Je vais y réfléchir" = Deal mort dans 85% des cas.</p>
+          {/* Battle-Tested High-Conversion Reframe */}
+          <div className="max-w-5xl mx-auto rounded-[3rem] bg-ink/5 border border-muted/20 overflow-hidden shadow-2xl">
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              {/* Left Side: The Pain (Death by Quote) */}
+              <div className="p-10 md:p-16 space-y-10 bg-white border-b md:border-b-0 md:border-r border-muted/20 relative">
+                 <div className="space-y-6">
+                   <Badge variant="outline" className="text-red-600 border-red-600/20 uppercase font-black px-4 py-1 text-[10px] tracking-widest">La Réalité Brutale</Badge>
+                   <h4 className="text-3xl md:text-4xl font-display font-black leading-[0.9] italic uppercase tracking-tighter">
+                     "Je vais y réfléchir" = <br/>
+                     <span className="text-red-600">Le Deal est mort.</span>
+                   </h4>
+                   <p className="text-sm font-bold text-muted-foreground/60 uppercase">Dans 85% des cas, le client ne rappelle jamais.</p>
+                 </div>
+                 <ul className="space-y-6">
+                   {[
+                     "L'Ancienne Méthode (Lente)",
+                     "Envoyer un devis froid par email",
+                     "Expliquer les matériaux pendant 1h",
+                     "Attendre 2 semaines une réponse"
+                   ].map((t, i) => (
+                     <li key={i} className={cn("flex gap-4 text-sm font-bold text-muted-foreground", i > 0 && "line-through decoration-red-500/50 opacity-60")}>
+                       {i === 0 ? <AlertTriangle size={18} className="shrink-0 text-red-500" /> : <X size={18} className="shrink-0 text-red-500/30" />}
+                       <span className={cn(i === 0 && "uppercase tracking-widest text-ink")}>{t}</span>
+                     </li>
+                   ))}
+                 </ul>
               </div>
-              <div className="hidden md:block w-[1px] h-12 bg-muted/20" />
-              <div className="text-center md:text-left">
-                <p className="text-[10px] uppercase font-bold text-muted-foreground">La Solution Visuelle</p>
-                <p className="text-xl font-medium italic">Le client voit le résultat. Le client signe. Point.</p>
-              </div>
-            </div>
-          </div>
+              
+              {/* Right Side: The Gain (Instant Decision) */}
+              <div className="p-10 md:p-16 space-y-10 bg-ink text-white relative overflow-hidden">
+                 <div className="absolute top-0 right-0 p-12 opacity-5 text-accent rotate-12 -translate-y-8 translate-x-8"><Zap size={300} /></div>
+                 
+                 <div className="space-y-6 relative z-10">
+                   <Badge variant="outline" className="text-accent border-accent/20 uppercase font-black px-4 py-1 text-[10px] tracking-widest">La Solution Visuelle</Badge>
+                   <h4 className="text-3xl md:text-4xl font-display font-black leading-[0.9] italic uppercase tracking-tighter">
+                     Votre client voit. <br/>
+                     <span className="text-accent underline decoration-accent/30 underline-offset-8">Il signe. Point.</span>
+                   </h4>
+                   <p className="text-sm font-bold text-white/40 uppercase">Supprimez l'hésitation. Signez sur place.</p>
+                 </div>
 
-          {/* The Reframe */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto items-center">
-            <div className="space-y-6">
-              <h3 className="text-2xl font-display font-black uppercase italic tracking-tighter">L'Ancienne Méthode (Lente)</h3>
-              <ul className="space-y-4">
-                <li className="flex gap-3 text-muted-foreground line-through decoration-red-500/50"><span>Envoyer un devis froid par email</span></li>
-                <li className="flex gap-3 text-muted-foreground line-through decoration-red-500/50"><span>Expliquer les matériaux pendant 1h</span></li>
-                <li className="flex gap-3 text-muted-foreground line-through decoration-red-500/50"><span>Attendre 2 semaines une réponse</span></li>
-              </ul>
-            </div>
-            <div className="space-y-6 bg-accent/5 p-8 rounded-3xl border border-accent/20">
-              <h3 className="text-2xl font-display font-black uppercase italic tracking-tighter text-accent">La Méthode Visuelle™ (Décisive)</h3>
-              <ul className="space-y-4">
-                <li className="flex gap-3 font-bold text-ink"><span>Montrer la transformation en direct</span></li>
-                <li className="flex gap-3 font-bold text-ink"><span>Supprimer l'incertitude du client</span></li>
-                <li className="flex gap-3 font-bold text-ink"><span>Récupérer l'acompte sur place</span></li>
-              </ul>
+                 <ul className="space-y-6 relative z-10">
+                   {[
+                     "La Méthode Visuelle™ (Décisive)",
+                     "Montrer la transformation en direct",
+                     "Supprimer l'incertitude du client",
+                     "Récupérer l'acompte sur place"
+                   ].map((t, i) => (
+                     <li key={i} className={cn("flex gap-4 text-sm font-black uppercase italic tracking-tight", i === 0 ? "text-accent" : "text-white")}>
+                       {i === 0 ? <Sparkles size={18} className="shrink-0 animate-pulse" /> : <CheckCircle2 size={18} className="shrink-0 text-accent" />}
+                       <span className={cn(i === 0 && "tracking-widest")}>{t}</span>
+                     </li>
+                   ))}
+                 </ul>
+
+                 <div className="pt-6 relative z-10">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 border border-accent/30 text-accent text-[10px] font-black uppercase tracking-widest">
+                       Objectif : Décision Instantanée
+                    </div>
+                 </div>
+              </div>
             </div>
           </div>
 
