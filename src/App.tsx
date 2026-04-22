@@ -14,6 +14,8 @@ import {
   ChevronRight,
   MessageCircle,
   AlertTriangle,
+  Instagram,
+  Globe,
   X
 } from "lucide-react";
 import { Demo } from "@/components/Demo";
@@ -280,10 +282,25 @@ export default function App() {
                    <p className="text-sm">"Le simulateur n'est pas un gadget. C'est ce qui fait qu'un client arrête de chercher ailleurs et m'appelle moi."</p>
                  </div>
                </div>
-               <Button size="lg" className="w-full sm:w-auto bg-accent hover:bg-accent/90 h-14 md:h-20 font-black italic uppercase tracking-tighter text-sm md:text-lg px-8 md:px-12 group whitespace-nowrap overflow-hidden text-ellipsis shadow-xl" onClick={() => document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth' })}>
-                 JE VEUX LES MÊMES RÉSULTATS
-                 <ChevronRight size={20} className="ml-2 group-hover:translate-x-1 shrink-0" />
-               </Button>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button 
+                    size="lg" 
+                    className="flex-1 bg-accent hover:bg-accent/90 h-14 md:h-20 font-black italic uppercase tracking-tighter text-sm md:text-lg px-8 group shadow-xl" 
+                    onClick={() => window.open('https://leparquetparisien.fr', '_blank')}
+                  >
+                    <Globe size={20} className="mr-2" />
+                    VOIR LE SIMULATEUR LIVE
+                    <ChevronRight size={20} className="ml-2 group-hover:translate-x-1 shrink-0" />
+                  </Button>
+                  <Button 
+                    size="lg" 
+                    className="flex-1 bg-white text-black hover:bg-white/90 h-14 md:h-20 font-black italic uppercase tracking-tighter text-sm md:text-lg px-8 group shadow-xl transition-all" 
+                    onClick={() => window.open('https://www.instagram.com/leparquetparisien/', '_blank')}
+                  >
+                    <Instagram size={20} className="mr-2" />
+                    VOIR L'INSTAGRAM
+                  </Button>
+                </div>
              </motion.div>
           </div>
         </div>

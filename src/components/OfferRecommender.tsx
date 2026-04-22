@@ -136,7 +136,7 @@ export function OfferRecommender() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
               {[
-                { id: "hesitation", label: "Le client hesité & compare", desc: "La mort lente du deal par le doute" },
+                { id: "hesitation", label: "Le client hésite & compare", desc: "La mort lente du deal par le doute" },
                 { id: "quotes", label: "Volume de devis fantômes", desc: "Travail gratuit sans signature finale" },
                 { id: "justify", label: "Négociation agressive", desc: "Le client ne voit pas la valeur ajoutée" },
                 { id: "loss", label: "Concurrence déloyale", desc: "Perdre face aux moins qualifiés" },
@@ -239,7 +239,7 @@ export function OfferRecommender() {
             <Button 
                disabled={!selections.city}
                onClick={handleAudit}
-               className="w-full h-24 bg-accent hover:bg-accent/90 text-2xl font-black uppercase italic rounded-full shadow-[0_20px_60px_-15px_rgba(242,125,38,0.3)] transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50"
+               className="w-full h-24 bg-accent hover:bg-accent/90 text-lg md:text-2xl font-black uppercase italic rounded-full shadow-[0_20px_60px_-15px_rgba(242,125,38,0.3)] transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50"
             >
               LANCER L'AUDIT DE MARCHÉ
               <ArrowRight className="ml-4" size={28} />
@@ -258,7 +258,7 @@ export function OfferRecommender() {
                    <Loader2 size={48} className="absolute inset-0 m-auto text-accent opacity-50 animate-bounce" />
                 </div>
                 <div className="space-y-3">
-                  <p className="text-sm font-black uppercase tracking-[0.8em] text-accent animate-pulse pl-3">Neural Audit Engine Active</p>
+                  <p className="text-sm font-black uppercase tracking-[0.8em] text-accent animate-pulse pl-3">Moteur d'Audit Neural Activé</p>
                   <p className="text-white/30 text-lg font-display italic tracking-tight">Analyse de la concurrence à {selections.city}...</p>
                 </div>
               </div>
@@ -295,7 +295,7 @@ export function OfferRecommender() {
                      </div>
                      <div className="pt-6 md:pt-10">
                         <Button 
-                          className="w-full md:w-fit h-20 md:h-24 px-10 md:px-16 bg-accent hover:bg-accent/90 text-xl md:text-3xl font-black uppercase italic rounded-full shadow-[0_30px_80px_-20px_rgba(242,125,38,0.4)] group overflow-hidden relative"
+                          className="w-full md:w-fit h-20 md:h-24 px-10 md:px-16 bg-accent hover:bg-accent/90 text-sm md:text-3xl font-black uppercase italic rounded-full shadow-[0_30px_80px_-20px_rgba(242,125,38,0.4)] group overflow-hidden relative"
                           onClick={() => window.location.href = 'https://cal.com/kontrakd/verifier-ma-ville'}
                         >
                           <span className="relative z-10 flex items-center gap-3">
@@ -319,7 +319,7 @@ export function OfferRecommender() {
                         <div className="space-y-4 md:space-y-6">
                            <div className="flex items-center gap-3">
                               <div className="w-10 h-[1px] bg-white/20" />
-                              <p className="text-[8px] md:text-xs font-black uppercase tracking-[0.5em] text-white/40">Audit Data Insights</p>
+                              <p className="text-[8px] md:text-xs font-black uppercase tracking-[0.5em] text-white/40">Aperçus de l'Audit</p>
                            </div>
                            <div className="text-white/90 text-lg md:text-xl font-sans leading-relaxed italic opacity-95">
                               <Markdown>
@@ -330,11 +330,11 @@ export function OfferRecommender() {
                         <div className="grid grid-cols-2 gap-4 md:gap-6">
                            <div className="p-6 md:p-8 bg-white/5 rounded-[2.5rem] md:rounded-[2.5rem] border border-white/5 flex flex-col items-center">
                               <p className="text-accent font-black text-3xl md:text-5xl tracking-tighter italic leading-none">98%</p>
-                              <p className="text-[8px] md:text-[10px] uppercase font-black text-white/30 mt-2 tracking-widest leading-none text-center">Match Score</p>
+                              <p className="text-[8px] md:text-[10px] uppercase font-black text-white/30 mt-2 tracking-widest leading-none text-center">Score de Match</p>
                            </div>
                            <div className="p-6 md:p-8 bg-white/5 rounded-[2.5rem] md:rounded-[2.5rem] border border-white/5 flex flex-col items-center">
                               <p className="text-white font-black text-3xl md:text-5xl tracking-tighter italic leading-none">CRITIQUE</p>
-                              <p className="text-[8px] md:text-[10px] uppercase font-black text-white/30 mt-2 tracking-widest leading-none text-center">Urgency</p>
+                              <p className="text-[8px] md:text-[10px] uppercase font-black text-white/30 mt-2 tracking-widest leading-none text-center">Urgence</p>
                            </div>
                         </div>
                      </Card>

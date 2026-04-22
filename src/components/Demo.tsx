@@ -53,11 +53,11 @@ const INDUSTRIES: IndustryConfig[] = [
 ];
 
 const STYLES: Record<Industry, string[]> = {
-  Flooring: ["Matte Oak", "Satin Walnut", "Glossy Teak", "Light Oak", "Dark Walnut"],
-  Kitchen: ["Modern Minimal", "Classic Shaker", "Industrial Loft", "Sleek Black", "Pure White"],
-  Bathroom: ["Marble Luxury", "Contemporary Slate", "Warm Spa", "Minimalist White"],
-  Painting: ["Warm Beige", "Cool Grey", "Forest Green", "Midnight Blue", "Matte White"],
-  Cleaning: ["Before/After Deep Clean", "Stain Removal", "Organization Mode"],
+  Flooring: ["Chêne Mat", "Noyer Satiné", "Teck Brillant", "Chêne Clair", "Noyer Sombre"],
+  Kitchen: ["Minimaliste Moderne", "Classique Shaker", "Loft Industriel", "Noir Épuré", "Blanc Pur"],
+  Bathroom: ["Marbre de Luxe", "Ardoise Contemporaine", "Spa Chaleureux", "Blanc Minimaliste"],
+  Painting: ["Beige Chaleureux", "Gris Frais", "Vert Forêt", "Bleu Nuit", "Blanc Mat"],
+  Cleaning: ["Nettoyage Profond", "Élimination des Taches", "Mode Organisation"],
 };
 
 export function Demo() {
@@ -71,7 +71,7 @@ export function Demo() {
   const [style, setStyle] = React.useState<string>(STYLES.Flooring[0]);
   const [isGenerating, setIsGenerating] = React.useState(false);
   const [isGeneratingVideo, setIsGeneratingVideo] = React.useState(false);
-  const [loadingText, setLoadingText] = React.useState("Analyzing space...");
+  const [loadingText, setLoadingText] = React.useState("Analyse de l'espace...");
   const [diagnostics, setDiagnostics] = React.useState<string | null>(null);
   const [localTrends, setLocalTrends] = React.useState<string | null>(null);
   const [result, setResult] = React.useState<string | null>(null);
@@ -322,13 +322,13 @@ export function Demo() {
                   {isGenerating && <Loader2 size={10} className="animate-spin text-accent" />}
                 </div>
                 <div className="text-[10px] font-mono text-muted-foreground line-clamp-2 md:line-clamp-none">
-                  <Markdown>{diagnostics ? (typeof diagnostics === 'object' ? (diagnostics as any).system_tags.join(' • ') : diagnostics) : "Analysing..."}</Markdown>
+                  <Markdown>{diagnostics ? (typeof diagnostics === 'object' ? (diagnostics as any).system_tags.join(' • ') : diagnostics) : "Analyse en cours..."}</Markdown>
                 </div>
               </div>
               <div className="flex-1 bg-accent/5 rounded-xl p-3 border border-accent/10">
                 <p className="text-[9px] font-black uppercase tracking-widest text-accent mb-2 underline">Market Intel</p>
                 <div className="text-[10px] font-mono italic text-muted-foreground line-clamp-2 md:line-clamp-none">
-                  <Markdown>{localTrends ? (typeof localTrends === 'object' ? (localTrends as any).market_intel.join(' • ') : localTrends) : "Scanning..."}</Markdown>
+                  <Markdown>{localTrends ? (typeof localTrends === 'object' ? (localTrends as any).market_intel.join(' • ') : localTrends) : "Scan en cours..."}</Markdown>
                 </div>
               </div>
             </div>
@@ -398,19 +398,19 @@ export function Demo() {
             </div>
             <div className="text-center space-y-3">
               <h4 className="text-xl font-black font-display uppercase tracking-tight">{loadingText}</h4>
-              <p className="text-xs text-muted-foreground animate-pulse font-mono">Gemini 3.1 Pro Intelligence Engaged...</p>
+              <p className="text-xs text-muted-foreground animate-pulse font-mono">Intelligence Gemini 3.1 Pro Activée...</p>
               
               {/* Dynamic reveal bars */}
               {(diagnostics || localTrends) && (
                 <div className="mt-8 space-y-4 max-w-md mx-auto">
                    {diagnostics && (
                      <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="p-3 bg-accent/10 border border-accent/20 rounded-xl text-[10px] font-mono text-accent">
-                        [SYSTEM SCAN]: {diagnostics}
+                        [SCAN SYSTÈME]: {diagnostics}
                      </motion.div>
                    )}
                    {localTrends && (
                      <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="p-3 bg-white/5 border border-white/10 rounded-xl text-[10px] font-mono text-muted-foreground italic">
-                        [MARKET INTEL]: {localTrends}
+                        [INFO MARCHÉ]: {localTrends}
                      </motion.div>
                    )}
                 </div>
@@ -593,7 +593,7 @@ export function Demo() {
                       <p className="text-accent font-black text-lg uppercase italic tracking-tight">Votre client vient de voir son résultat.</p>
                       <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest">Signez maintenant.</p>
                    </div>
-                   <Button className="w-full bg-accent hover:bg-accent/90 py-8 text-lg font-black shadow-2xl shadow-accent/25 uppercase tracking-tighter italic" onClick={() => window.location.href = '#pricing'}>
+                   <Button className="w-full bg-accent hover:bg-accent/90 py-8 text-sm md:text-lg font-black shadow-2xl shadow-accent/25 uppercase tracking-tighter italic whitespace-normal h-auto leading-tight" onClick={() => window.location.href = '#pricing'}>
                     DÉPLOYER CECI DANS MON ENTREPRISE
                   </Button>
                 </div>
