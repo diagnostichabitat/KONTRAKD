@@ -30,6 +30,15 @@
   text-wrap: balance;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Custom slider thumb for a more premium feel */
 [data-radix-collection-item] {
   @apply focus-visible:ring-0;

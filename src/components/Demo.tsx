@@ -155,7 +155,7 @@ export function Demo() {
     setResult(null);
 
     try {
-      setLoadingText("Scanning Architecture...");
+      setLoadingText("Analyse de l'Architecture...");
       
       let analysisResult: any;
       if (storedAnalysis && typeof storedAnalysis === 'object' && storedAnalysis.system_tags) {
@@ -169,11 +169,11 @@ export function Demo() {
       await new Promise(r => setTimeout(r, 2000));
 
       // Reveal Market Intel (2-4s)
-      setLoadingText("Calculating Market Impact...");
+      setLoadingText("Calcul de l'impact marché...");
       setLocalTrends(analysisResult.market_intel.join(" • "));
       await new Promise(r => setTimeout(r, 2000));
 
-      setLoadingText("Rendering Final Result...");
+      setLoadingText("Génération du résultat final...");
       
       const tradePrompts: Record<string, string> = {
         "Flooring": `Edit ONLY the floor surface. Replace with ${style} wood flooring. Keep ALL walls, furniture, objects, ceiling, lighting, shadows, perspective IDENTICAL. Photorealistic renovation result. Same room, same angle, same everything except the floor.`,
@@ -209,14 +209,13 @@ export function Demo() {
         return (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
             <div className="text-center space-y-2">
-              <Badge variant="outline" className="text-accent border-accent/20">Étape 1 / 3</Badge>
-              <h3 className="text-2xl font-display font-bold">Choisissez Votre Arme</h3>
-              <p className="text-muted-foreground text-sm font-black italic">“Ils n'imaginent plus. Ils décident. Maintenant.”</p>
+              <Badge variant="outline" className="text-accent border-accent/20">Étape 1/3 — Quel est votre métier ?</Badge>
+              <h3 className="text-2xl font-display font-bold">Votre client va voir son résultat en direct.</h3>
             </div>
             
             <div className="space-y-3">
               <Label className="text-[10px] uppercase font-bold text-muted-foreground flex items-center gap-2">
-                <MapPin size={10} className="text-accent" /> Target Region (French cities supported)
+                <MapPin size={10} className="text-accent" /> Votre ville
               </Label>
               <input 
                 type="text"
@@ -347,11 +346,11 @@ export function Demo() {
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label className="text-[10px] uppercase font-bold text-muted-foreground flex items-center gap-2">
-                  <MessageSquare size={12} className="text-accent" /> Special Vision / Instructions
+                  <MessageSquare size={12} className="text-accent" /> Votre vision / Consignes
                 </Label>
                 <textarea 
                   className="w-full h-20 bg-muted/20 border-muted rounded-xl p-3 text-xs focus:ring-1 focus:ring-accent outline-none resize-none"
-                  placeholder="e.g. Keep the walls as is, but add a slightly grey tint to the wood..."
+                  placeholder="Ex: Gardez les murs, mais mettez un bois plus gris..."
                   value={userInstructions}
                   onChange={(e) => setUserInstructions(e.target.value)}
                 />
@@ -359,7 +358,7 @@ export function Demo() {
 
               <div className="space-y-3">
                 <Label className="text-[10px] uppercase font-bold text-muted-foreground flex items-center gap-2">
-                  <Paintbrush size={12} className="text-accent" /> Select Material Finish
+                  <Paintbrush size={12} className="text-accent" /> Choisissez la finition
                 </Label>
                 <div className="grid grid-cols-2 gap-2">
                   {STYLES[industry].map((s) => (
@@ -571,12 +570,12 @@ export function Demo() {
                     {isGeneratingVideo ? (
                       <>
                         <Loader2 size={16} className="animate-spin mr-2" />
-                        Rendering...
+                        Génération...
                       </>
                     ) : (
                       <>
                         <Video size={16} className="mr-2 group-hover:scale-110 transition-transform" />
-                        Live 3D Walkthrough
+                        Visite 3D Directe
                       </>
                     )}
                   </Button>

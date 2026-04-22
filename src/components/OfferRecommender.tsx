@@ -96,10 +96,7 @@ export function OfferRecommender() {
         return (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="space-y-12">
             <div className="text-center space-y-4">
-              <Badge variant="outline" className="text-accent border-accent/30 tracking-widest px-4 py-1 text-[8px] md:text-xs">CALIBRATION INDUSTRIE</Badge>
-              <h3 className="text-3xl md:text-6xl font-display font-black uppercase text-white leading-tight tracking-tighter text-balance">
-                VOTRE <span className="text-accent italic">CHAMP D'ACTION</span>
-              </h3>
+              <Badge variant="outline" className="text-accent border-accent/30 tracking-widest px-4 py-1 text-[8px] md:text-xs">Pour quel métier ?</Badge>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 max-w-5xl mx-auto w-full text-center">
               {[
