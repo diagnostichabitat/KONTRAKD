@@ -80,34 +80,6 @@ export function Demo() {
   const [resolution, setResolution] = React.useState<"1K" | "2K" | "4K">("1K");
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
-  React.useEffect(() => {
-    // Initialiser le formulaire HubSpot
-    const initHubSpot = () => {
-      if ((window as any).hbspt) {
-        // Clear previous form if any
-        const target = document.getElementById('hubspot-form-target');
-        if (target) target.innerHTML = '';
-        
-        (window as any).hbspt.forms.create({
-          region: "eu1",
-          portalId: "147631066",
-          formId: "029cb74a-dde1-476f-9b12-5ad017ec33db",
-          target: "#hubspot-form-target",
-          onFormSubmitted: () => {
-            setLeadCaptured(true);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-        });
-      } else {
-        setTimeout(initHubSpot, 500);
-      }
-    };
-
-    if (step === 5 && !leadCaptured) {
-      initHubSpot();
-    }
-  }, [step, leadCaptured]);
-
   const sampleImages: Record<Industry, string> = {
     Flooring: "https://i.postimg.cc/MGBCbQrb/new-white-oak-select-1.webp",
     Kitchen: "https://i.postimg.cc/FRgwwQvd/hbx050123napiers-005-preview-642dcd73da1ca.avif",
@@ -426,7 +398,7 @@ export function Demo() {
             </div>
             <div className="text-center space-y-3">
               <h4 className="text-xl font-black font-display uppercase tracking-tight">{loadingText}</h4>
-              <p className="text-xs text-muted-foreground animate-pulse font-mono">Intelligence Gemini 3.1 Pro Activée...</p>
+              <p className="text-xs text-muted-foreground animate-pulse font-mono">Intelligence Kontrakd OS Activée...</p>
               
               {/* Dynamic reveal bars */}
               {(diagnostics || localTrends) && (
@@ -486,13 +458,53 @@ export function Demo() {
                   <p className="text-xs text-muted-foreground">Entrez vos coordonnées pour débloquer votre résultat</p>
                 </div>
 
-                {/* HubSpot Form Target */}
-                <div id="hubspot-form-target" className="relative z-10 min-h-[300px]">
-                   <div className="flex flex-col items-center justify-center h-full py-12">
-                      <Loader2 className="animate-spin text-accent mb-2" size={24} />
-                      <p className="text-[10px] uppercase font-bold text-muted-foreground">Chargement du formulaire sécurisé...</p>
-                   </div>
+                <div className="space-y-3 relative z-10">
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                      <Label className="text-[10px] uppercase font-bold text-muted-foreground">Nom complet</Label>
+                      <input 
+                        type="text" 
+                        placeholder="Jean-Marc" 
+                        className="w-full bg-background border-muted rounded-lg px-3 py-2 text-xs" 
+                        value={leadData.name}
+                        onChange={e => setLeadData({...leadData, name: e.target.value})}
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] uppercase font-bold text-muted-foreground">Téléphone</Label>
+                      <input 
+                        type="tel" 
+                        placeholder="06 12 34 56 78" 
+                        className="w-full bg-background border-muted rounded-lg px-3 py-2 text-xs" 
+                        value={leadData.phone}
+                        onChange={e => setLeadData({...leadData, phone: e.target.value})}
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Email Professionnel</Label>
+                    <input 
+                      type="email" 
+                      placeholder="jm@renovation.fr" 
+                      className="w-full bg-background border-muted rounded-lg px-3 py-2 text-xs" 
+                      value={leadData.email}
+                      onChange={e => setLeadData({...leadData, email: e.target.value})}
+                    />
+                  </div>
                 </div>
+
+                <Button 
+                  className="w-full bg-accent hover:bg-accent/90 min-h-[3.5rem] h-auto py-3 text-sm sm:text-base md:text-lg font-black italic group shadow-xl shadow-accent/20 relative z-10 flex items-center justify-center gap-2 px-4 whitespace-normal leading-tight"
+                  onClick={() => {
+                    if (leadData.name && leadData.email) {
+                      setLeadCaptured(true);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                  }}
+                >
+                  DÉBLOQUER MON RÉSULTAT
+                  <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                </Button>
 
                 <div className="flex items-center justify-center gap-6 pt-2 border-t border-muted/20 relative z-10">
                   <div className="flex flex-col items-center">

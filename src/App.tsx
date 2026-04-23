@@ -141,7 +141,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-end mb-12 md:mb-20">
             <div className="lg:col-span-8 space-y-4 md:space-y-6">
-              <h2 className="text-4xl md:text-8xl font-display font-black tracking-tighter leading-[0.85] uppercase">
+              <h2 className="text-3xl md:text-6xl font-display font-black tracking-tighter leading-tight uppercase">
                 Pourquoi vous perdez <br/>
                 <span className="text-accent italic">des chantiers que vous méritez.</span>
               </h2>
