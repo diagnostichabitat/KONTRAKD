@@ -80,6 +80,34 @@ export function Demo() {
   const [resolution, setResolution] = React.useState<"1K" | "2K" | "4K">("1K");
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
+  React.useEffect(() => {
+    // Initialiser le formulaire HubSpot
+    const initHubSpot = () => {
+      if ((window as any).hbspt) {
+        // Clear previous form if any
+        const target = document.getElementById('hubspot-form-target');
+        if (target) target.innerHTML = '';
+        
+        (window as any).hbspt.forms.create({
+          region: "eu1",
+          portalId: "147631066",
+          formId: "029cb74a-dde1-476f-9b12-5ad017ec33db",
+          target: "#hubspot-form-target",
+          onFormSubmitted: () => {
+            setLeadCaptured(true);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        });
+      } else {
+        setTimeout(initHubSpot, 500);
+      }
+    };
+
+    if (step === 5 && !leadCaptured) {
+      initHubSpot();
+    }
+  }, [step, leadCaptured]);
+
   const sampleImages: Record<Industry, string> = {
     Flooring: "https://i.postimg.cc/MGBCbQrb/new-white-oak-select-1.webp",
     Kitchen: "https://i.postimg.cc/FRgwwQvd/hbx050123napiers-005-preview-642dcd73da1ca.avif",
@@ -200,45 +228,6 @@ export function Demo() {
       setStep(3);
     } finally {
       setIsGenerating(false);
-    }
-  };
-
-  const handleHubSpotSubmit = async () => {
-    const portalId = "147631066";
-    const formId = "029cb74a-dde1-476f-9b12-5ad017ec33db";
-    const endpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
-
-    // Get HubSpot tracking cookie
-    const getCookie = (name: string) => {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop()?.split(';').shift();
-    };
-    const hutk = getCookie('hubspotutk');
-
-    const body = {
-      fields: [
-        { name: "email", value: leadData.email },
-        { name: "firstname", value: leadData.name },
-        { name: "phone", value: leadData.phone },
-        { name: "industry_type", value: industry }, // Optional: track which industry they used
-        { name: "region", value: region } // Optional: track their city
-      ],
-      context: {
-        hutk: hutk,
-        pageUri: window.location.href,
-        pageName: document.title
-      }
-    };
-
-    try {
-      await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-      });
-    } catch (err) {
-      console.error("HubSpot submission error:", err);
     }
   };
 
@@ -497,54 +486,13 @@ export function Demo() {
                   <p className="text-xs text-muted-foreground">Entrez vos coordonnées pour débloquer votre résultat</p>
                 </div>
 
-                <div className="space-y-3 relative z-10">
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="space-y-1">
-                      <Label className="text-[10px] uppercase font-bold text-muted-foreground">Nom complet</Label>
-                      <input 
-                        type="text" 
-                        placeholder="Jean-Marc" 
-                        className="w-full bg-background border-muted rounded-lg px-3 py-2 text-xs" 
-                        value={leadData.name}
-                        onChange={e => setLeadData({...leadData, name: e.target.value})}
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[10px] uppercase font-bold text-muted-foreground">Téléphone</Label>
-                      <input 
-                        type="tel" 
-                        placeholder="06 12 34 56 78" 
-                        className="w-full bg-background border-muted rounded-lg px-3 py-2 text-xs" 
-                        value={leadData.phone}
-                        onChange={e => setLeadData({...leadData, phone: e.target.value})}
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-1">
-                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Email Professionnel</Label>
-                    <input 
-                      type="email" 
-                      placeholder="jm@renovation.fr" 
-                      className="w-full bg-background border-muted rounded-lg px-3 py-2 text-xs" 
-                      value={leadData.email}
-                      onChange={e => setLeadData({...leadData, email: e.target.value})}
-                    />
-                  </div>
+                {/* HubSpot Form Target */}
+                <div id="hubspot-form-target" className="relative z-10 min-h-[300px]">
+                   <div className="flex flex-col items-center justify-center h-full py-12">
+                      <Loader2 className="animate-spin text-accent mb-2" size={24} />
+                      <p className="text-[10px] uppercase font-bold text-muted-foreground">Chargement du formulaire sécurisé...</p>
+                   </div>
                 </div>
-
-                <Button 
-                  className="w-full bg-accent hover:bg-accent/90 min-h-[3.5rem] h-auto py-3 text-sm sm:text-base md:text-lg font-black italic group shadow-xl shadow-accent/20 relative z-10 flex items-center justify-center gap-2 px-4 whitespace-normal leading-tight"
-                  onClick={async () => {
-                    if (leadData.name && leadData.email) {
-                      await handleHubSpotSubmit();
-                      setLeadCaptured(true);
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }
-                  }}
-                >
-                  DÉBLOQUER MON RÉSULTAT
-                  <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
 
                 <div className="flex items-center justify-center gap-6 pt-2 border-t border-muted/20 relative z-10">
                   <div className="flex flex-col items-center">
