@@ -203,6 +203,45 @@ export function Demo() {
     }
   };
 
+  const handleHubSpotSubmit = async () => {
+    const portalId = "147631066";
+    const formId = "029cb74a-dde1-476f-9b12-5ad017ec33db";
+    const endpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
+
+    // Get HubSpot tracking cookie
+    const getCookie = (name: string) => {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop()?.split(';').shift();
+    };
+    const hutk = getCookie('hubspotutk');
+
+    const body = {
+      fields: [
+        { name: "email", value: leadData.email },
+        { name: "firstname", value: leadData.name },
+        { name: "phone", value: leadData.phone },
+        { name: "industry_type", value: industry }, // Optional: track which industry they used
+        { name: "region", value: region } // Optional: track their city
+      ],
+      context: {
+        hutk: hutk,
+        pageUri: window.location.href,
+        pageName: document.title
+      }
+    };
+
+    try {
+      await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+    } catch (err) {
+      console.error("HubSpot submission error:", err);
+    }
+  };
+
   const renderStep = () => {
     switch (step) {
       case 1:
@@ -495,8 +534,9 @@ export function Demo() {
 
                 <Button 
                   className="w-full bg-accent hover:bg-accent/90 min-h-[3.5rem] h-auto py-3 text-sm sm:text-base md:text-lg font-black italic group shadow-xl shadow-accent/20 relative z-10 flex items-center justify-center gap-2 px-4 whitespace-normal leading-tight"
-                  onClick={() => {
+                  onClick={async () => {
                     if (leadData.name && leadData.email) {
+                      await handleHubSpotSubmit();
                       setLeadCaptured(true);
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }
