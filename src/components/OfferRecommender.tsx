@@ -8,6 +8,7 @@ import { CheckCircle2, ArrowRight, Target, Briefcase, AlertTriangle, Sparkles, M
 import { getGenAI } from "@/lib/gemini";
 import Markdown from "react-markdown";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 type Step = 1 | 2 | 3 | 4 | 5;
 
@@ -19,6 +20,7 @@ interface RecommendationResult {
 }
 
 export function OfferRecommender() {
+  const { t, language } = useTranslation();
   const [step, setStep] = React.useState<Step>(1);
   const [isLoading, setIsLoading] = React.useState(false);
   const [selections, setSelections] = React.useState({
@@ -55,10 +57,10 @@ export function OfferRecommender() {
       
       TASK:
       1. Use Search to understand the specific renovation market competition in ${selections.city}.
-      2. Provide a brutal, 1-line diagnosis of their situation in French. Highlight the gap between their ${selections.business} skill and their digital conversion.
+      2. Provide a brutal, 1-line diagnosis of their situation in ${language === 'fr' ? 'French' : 'Spanish'}. Highlight the gap between their ${selections.business} skill and their digital conversion.
       3. Recommend ONE of the two options.
-      4. Create a personalized, high-value "Irresistible Package" name in French (e.g., "Le Protocole de Signature Inévitable - ${selections.city}").
-      5. List 3 high-impact outcomes in French.
+      4. Create a personalized, high-value "Irresistible Package" name in ${language === 'fr' ? 'French' : 'Spanish'} (e.g., "${language === 'fr' ? 'Le Protocole de Signature Inévitable' : 'El Protocolo de Firma Inevitable'} - ${selections.city}").
+      5. List 3 high-impact outcomes in ${language === 'fr' ? 'French' : 'Spanish'}.
       
       Important: Return ONLY a valid JSON object.
       {
@@ -96,14 +98,14 @@ export function OfferRecommender() {
         return (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="space-y-12">
             <div className="text-center space-y-4">
-              <Badge variant="outline" className="text-accent border-accent/30 tracking-widest px-4 py-1 text-[8px] md:text-xs">Pour quel métier ?</Badge>
+              <Badge variant="outline" className="text-accent border-accent/30 tracking-widest px-4 py-1 text-[8px] md:text-xs">{t("recommender.badge1")}</Badge>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 max-w-5xl mx-auto w-full text-center">
               {[
-                { id: "Parquet", label: "Parquet", image: "https://i.postimg.cc/MGBCbQrb/new-white-oak-select-1.webp" },
-                { id: "Cuisines", label: "Cuisines", image: "https://i.postimg.cc/FRgwwQvd/hbx050123napiers-005-preview-642dcd73da1ca.avif" },
-                { id: "Bains", label: "Bains", image: "https://i.postimg.cc/02NhX3Bj/Qube-Wall-Mounted-Pebble-Grey-Gloss.jpg" },
-                { id: "Peinture", label: "Peinture", image: "https://i.postimg.cc/y8M5dNYd/183805968-s.jpg" }
+                { id: "parquet", label: t("industries.parquet"), image: "https://i.postimg.cc/MGBCbQrb/new-white-oak-select-1.webp" },
+                { id: "cuisines", label: t("industries.cuisines"), image: "https://i.postimg.cc/FRgwwQvd/hbx050123napiers-005-preview-642dcd73da1ca.avif" },
+                { id: "bains", label: t("industries.bains"), image: "https://i.postimg.cc/02NhX3Bj/Qube-Wall-Mounted-Pebble-Grey-Gloss.jpg" },
+                { id: "peinture", label: t("industries.peinture"), image: "https://i.postimg.cc/y8M5dNYd/183805968-s.jpg" }
               ].map((opt) => (
                 <button
                   key={opt.id}
@@ -129,17 +131,17 @@ export function OfferRecommender() {
         return (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="space-y-12">
             <div className="text-center space-y-4">
-              <Badge variant="outline" className="text-red-500 border-red-500/30 tracking-widest px-4 py-1">DETECTION DE FRICTION</Badge>
+              <Badge variant="outline" className="text-red-500 border-red-500/30 tracking-widest px-4 py-1">{t("recommender.badge2")}</Badge>
               <h3 className="text-4xl md:text-6xl font-display font-black uppercase text-white leading-none tracking-tighter">
-                Quelle <span className="text-red-500 italic text-5xl">Incertitude</span> vous tue ?
+                {t("recommender.title2")}
               </h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
               {[
-                { id: "hesitation", label: "Le client hésite & compare", desc: "La mort lente du deal par le doute" },
-                { id: "quotes", label: "Volume de devis fantômes", desc: "Travail gratuit sans signature finale" },
-                { id: "justify", label: "Négociation agressive", desc: "Le client ne voit pas la valeur ajoutée" },
-                { id: "loss", label: "Concurrence déloyale", desc: "Perdre face aux moins qualifiés" },
+                { id: "hesitation", label: t("recommender.problems.hesitation.label"), desc: t("recommender.problems.hesitation.desc") },
+                { id: "quotes", label: t("recommender.problems.quotes.label"), desc: t("recommender.problems.quotes.desc") },
+                { id: "justify", label: t("recommender.problems.justify.label"), desc: t("recommender.problems.justify.desc") },
+                { id: "loss", label: t("recommender.problems.loss.label"), desc: t("recommender.problems.loss.desc") },
               ].map((opt) => (
                 <button
                   key={opt.id}
@@ -161,17 +163,17 @@ export function OfferRecommender() {
         return (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="space-y-12">
             <div className="text-center space-y-4">
-              <Badge variant="outline" className="text-accent border-accent/30 tracking-widest px-4 py-1">INFRASTRUCTURE DIGITALE</Badge>
+              <Badge variant="outline" className="text-accent border-accent/30 tracking-widest px-4 py-1">{t("recommender.badge3")}</Badge>
               <h3 className="text-4xl md:text-6xl font-display font-black uppercase text-white leading-none tracking-tighter">
-                Votre <span className="text-accent italic">Présence</span> Actuelle
+                {t("recommender.title3")}
               </h3>
             </div>
             
-            <div className="space-y-8 max-w-2xl mx-auto">
+            <div className="space-y-8 max-w-2xl mx-auto text-white">
               <div className="space-y-4">
-                <Label className="text-[10px] uppercase font-black tracking-[0.3em] text-white/30 text-center block">Avez-vous un site web ?</Label>
+                <Label className="text-[10px] uppercase font-black tracking-[0.3em] text-white/30 text-center block">{t("recommender.hasSite")}</Label>
                 <div className="grid grid-cols-2 gap-4">
-                  {[{ id: "yes", label: "OUI" }, { id: "no", label: "NON" }].map((opt) => (
+                  {[{ id: "yes", label: t("common.yes") }, { id: "no", label: t("common.no") }].map((opt) => (
                     <button
                       key={opt.id}
                       onClick={() => setSelections({ ...selections, hasSite: opt.id })}
@@ -189,9 +191,9 @@ export function OfferRecommender() {
               <AnimatePresence>
                 {selections.hasSite && (
                   <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="space-y-4 pt-4 border-t border-white/5">
-                    <Label className="text-[10px] uppercase font-black tracking-[0.3em] text-white/30 text-center block">Lancez-vous des publicités ?</Label>
+                    <Label className="text-[10px] uppercase font-black tracking-[0.3em] text-white/30 text-center block">{t("recommender.runsAds")}</Label>
                     <div className="grid grid-cols-2 gap-4">
-                      {[{ id: "yes", label: "OUI" }, { id: "no", label: "NON" }].map((opt) => (
+                      {[{ id: "yes", label: t("common.yes") }, { id: "no", label: t("common.no") }].map((opt) => (
                         <button
                           key={opt.id}
                           onClick={() => {
@@ -218,18 +220,18 @@ export function OfferRecommender() {
         return (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="space-y-12 max-w-2xl mx-auto">
             <div className="text-center space-y-4">
-              <Badge variant="outline" className="text-accent border-accent/30 tracking-widest px-4 py-1">ANALYSE TERRITORIALE</Badge>
+              <Badge variant="outline" className="text-accent border-accent/30 tracking-widest px-4 py-1">{t("recommender.badge4")}</Badge>
               <h3 className="text-4xl md:text-6xl font-display font-black uppercase text-white leading-none tracking-tighter italic">
-                Secteur à <span className="text-accent">Verrouiller</span> ?
+                {t("recommender.title4")}
               </h3>
-              <p className="text-white/30 text-xs font-bold uppercase tracking-widest">Nous vérifions la disponibilité de votre ville en temps réel.</p>
+              <p className="text-white/30 text-xs font-bold uppercase tracking-widest">{t("recommender.checkCity")}</p>
             </div>
             <div className="relative">
               <MapPin className="absolute left-8 top-1/2 -translate-y-1/2 text-accent" size={32} />
               <input 
                 type="text"
                 autoFocus
-                placeholder="Ex: Paris, Lyon, Bordeaux..."
+                placeholder={t("recommender.cityPlaceholder")}
                 className="w-full bg-white/5 border-2 border-white/10 rounded-[3rem] px-20 py-10 text-3xl text-white font-display focus:border-accent outline-none placeholder:text-white/10 tracking-tight"
                 value={selections.city}
                 onChange={e => setSelections({...selections, city: e.target.value})}
@@ -241,7 +243,7 @@ export function OfferRecommender() {
                onClick={handleAudit}
                className="w-full h-24 bg-accent hover:bg-accent/90 text-lg md:text-2xl font-black uppercase italic rounded-full shadow-[0_20px_60px_-15px_rgba(242,125,38,0.3)] transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50"
             >
-              LANCER L'AUDIT DE MARCHÉ
+              {t("recommender.auditBtn")}
               <ArrowRight className="ml-4" size={28} />
             </Button>
           </motion.div>
@@ -258,23 +260,23 @@ export function OfferRecommender() {
                    <Loader2 size={48} className="absolute inset-0 m-auto text-accent opacity-50 animate-bounce" />
                 </div>
                 <div className="space-y-3">
-                  <p className="text-sm font-black uppercase tracking-[0.8em] text-accent animate-pulse pl-3">Moteur d'Audit Neural Activé</p>
-                  <p className="text-white/30 text-lg font-display italic tracking-tight">Analyse de la concurrence à {selections.city}...</p>
+                  <p className="text-sm font-black uppercase tracking-[0.8em] text-accent animate-pulse pl-3">{t("recommender.loadingAudit")}</p>
+                  <p className="text-white/30 text-lg font-display italic tracking-tight">{t("recommender.analyzing").replace("{city}", selections.city)}</p>
                 </div>
               </div>
             ) : result && (
               <motion.div initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="space-y-16">
                 <div className="text-center space-y-6 max-w-3xl mx-auto">
-                  <Badge className="bg-white text-ink border-none rounded-full px-8 py-2 font-black uppercase tracking-widest text-xs shadow-xl animate-bounce">Diagnostic Stratégique Débloqué</Badge>
+                   <Badge className="bg-white text-ink border-none rounded-full px-8 py-2 font-black uppercase tracking-widest text-xs shadow-xl animate-bounce">{t("recommender.diagnosticUnlocked")}</Badge>
                   <h3 className="text-3xl md:text-5xl font-sans font-black text-white leading-tight uppercase italic tracking-tight">
                     <Markdown>{result.diagnosis}</Markdown>
                   </h3>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-start text-white">
                   <div className="space-y-8 md:space-y-10 order-2 lg:order-1">
                      <div className="space-y-4">
-                        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-accent">Votre Audit Stratégique</p>
+                        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-accent">{t("recommender.yourAudit")}</p>
                         <h4 className="text-4xl md:text-7xl font-sans font-black uppercase text-white tracking-tighter leading-tight md:leading-none">{result.irresistibleOfferTitle}</h4>
                      </div>
                      <div className="space-y-4 md:space-y-6">
@@ -299,13 +301,13 @@ export function OfferRecommender() {
                           onClick={() => window.location.href = 'https://cal.com/kontrakd/verifier-ma-ville'}
                         >
                           <span className="relative z-10 flex items-center gap-3">
-                            SÉCURISER CETTE EXCLUSIVITÉ
+                            {t("recommender.secureExclusivity")}
                             <ChevronRightIcon className="group-hover:translate-x-3 transition-transform" size={24} />
                           </span>
                         </Button>
                         <div className="flex items-center gap-3 mt-6 text-white/30 justify-center lg:justify-start">
                            <MapPin size={14} className="text-accent" />
-                           <p className="text-[10px] font-black uppercase tracking-[0.3em]">Accord Territorial Disponsible : {selections.city}</p>
+                           <p className="text-[10px] font-black uppercase tracking-[0.3em]">{t("recommender.available")} : {selections.city}</p>
                         </div>
                      </div>
                   </div>
@@ -319,22 +321,25 @@ export function OfferRecommender() {
                         <div className="space-y-4 md:space-y-6">
                            <div className="flex items-center gap-3">
                               <div className="w-10 h-[1px] bg-white/20" />
-                              <p className="text-[8px] md:text-xs font-black uppercase tracking-[0.5em] text-white/40">Aperçus de l'Audit</p>
+                              <p className="text-[8px] md:text-xs font-black uppercase tracking-[0.5em] text-white/40">{t("recommender.auditInsights")}</p>
                            </div>
                            <div className="text-white/90 text-lg md:text-xl font-sans leading-relaxed italic opacity-95">
                               <Markdown>
-                                 {`En analysant le marché de **${selections.city}**, votre profil d'expert en **${selections.business}** ne peut plus se permettre d'être comparé. Vous avez besoin d'une approche **${result.recommendation === 'Domination' ? 'Agressive de Domination' : 'Chirurgicale de Signature'}** pour briser le plafond actuel.`}
+                                 {t("recommender.summary")
+                                   .replace("{city}", selections.city)
+                                   .replace("{business}", t(`industries.${selections.business.toLowerCase()}`))
+                                   .replace("{recommendation}", result.recommendation === 'Domination' ? t("recommender.recDomination") : t("recommender.recArtisan"))}
                               </Markdown>
                            </div>
                         </div>
                         <div className="grid grid-cols-2 gap-4 md:gap-6">
                            <div className="p-6 md:p-8 bg-white/5 rounded-[2.5rem] md:rounded-[2.5rem] border border-white/5 flex flex-col items-center">
                               <p className="text-accent font-black text-3xl md:text-5xl tracking-tighter italic leading-none">98%</p>
-                              <p className="text-[8px] md:text-[10px] uppercase font-black text-white/30 mt-2 tracking-widest leading-none text-center">Score de Match</p>
+                              <p className="text-[8px] md:text-[10px] uppercase font-black text-white/30 mt-2 tracking-widest leading-none text-center">{t("recommender.matchScore")}</p>
                            </div>
                            <div className="p-6 md:p-8 bg-white/5 rounded-[2.5rem] md:rounded-[2.5rem] border border-white/5 flex flex-col items-center">
-                              <p className="text-white font-black text-3xl md:text-5xl tracking-tighter italic leading-none">CRITIQUE</p>
-                              <p className="text-[8px] md:text-[10px] uppercase font-black text-white/30 mt-2 tracking-widest leading-none text-center">Urgence</p>
+                              <p className="text-white font-black text-3xl md:text-5xl tracking-tighter italic leading-none">{t("recommender.urgencyLevel")}</p>
+                              <p className="text-[8px] md:text-[10px] uppercase font-black text-white/30 mt-2 tracking-widest leading-none text-center">{t("recommender.urgency")}</p>
                            </div>
                         </div>
                      </Card>

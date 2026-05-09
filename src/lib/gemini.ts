@@ -44,32 +44,35 @@ export async function analyzeSpaceAdvanced(base64Image: string, trade: string) {
     const tradeDescTarget = tradeDescriptions[trade] || "expert en rénovation";
 
     const prompt = `You are a senior French renovation expert specialized in ${tradeDescTarget}. 
-Analyze this photo and return ONLY a valid JSON object:
-
-{
-  "system_tags": [
-    "État actuel: [observation technique précise et spécifique à ${tradeDescTarget}]",
-    "Surface/Zone estimée: [dimension visuelle estimée]",
-    "Urgence: [Critique / Modérée / Cosmétique] — [raison en 5 mots]",
-    "Compatibilité technique: [matériaux/finitions compatibles avec ce support]",
-    "Intervention requise: [liste des actions préparatoires nécessaires]"
-  ],
-  "market_intel": [
-    "Valorisation estimée: +X% sur le bien après intervention",
-    "Argument prix: [finition/produit recommandé] justifie +€X/m² vs concurrence",
-    "Délai estimé: X jours — avantage concurrentiel si réponse sous 24h",
-    "Coût inaction: [conséquence chiffrée si le prospect ne rénove pas maintenant]"
-  ]
-}
-
-Rules:
-- Be technically specific to ${tradeDescTarget}, not generic
-- Use French
-- No markdown, no explanation, ONLY the JSON`;
+    CRITICAL: Your goal is NOT to redesign, but to identify the EXACT current state, materials, and structure to guide a PERFECT RESTORATION.
+    
+    Analyze this photo and return ONLY a valid JSON object:
+    
+    {
+      "system_tags": [
+        "Identité Visuelle: [type exact de matériau et mode de pose existant]",
+        "État actuel: [diagnostique technique de dégradation spécifique à ${tradeDescTarget}]",
+        "Structure: [fixitée des éléments architecturaux à préserver]",
+        "Urgence: [Critique / Modérée / Cosmétique] — [dégradation observée]",
+        "Actions de Restauration: [ponçage, nettoyage, vitrification, etc.]"
+      ],
+      "market_intel": [
+        "Valorisation Restauration: +X% sur le bien après remise à neuf de l'existant",
+        "Argument Patrimoine: [matériau] d'origine est un atout à conserver",
+        "Économie vs Remplacement: Pourquoi restaurer est plus rentable ici",
+        "Conseil technique: [produit spécifique] pour préserver le grain/l'éclat"
+      ]
+    }
+    
+    Rules:
+    - Focus on PRESERVATION and RESTORATION, never replacement.
+    - Be technically specific to ${tradeDescTarget}.
+    - Use French.
+    - No markdown, no explanation, ONLY the JSON`;
 
     const genAI = getGenAI();
     const response = await genAI.models.generateContent({
-      model: "gemini-2.0-flash",
+      model: "gemini-3-flash-preview",
       contents: [{
         role: "user",
         parts: [
@@ -98,13 +101,15 @@ Rules:
 export async function getLocalRenovationIntelligence(area: string, industry: string) {
   try {
     const genAI = getGenAI();
-    const response = await (genAI.models as any).generateContent({
+    const response = await genAI.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: [{
         role: "user",
         parts: [{ text: `List 3 premium renovation trends for ${industry} in ${area}. Max 3 words per trend. No paragraphs.` }]
       }],
-      tools: [{ googleSearch: {} }]
+      config: {
+        tools: [{ googleSearch: {} }]
+      }
     });
 
     return response.text;
@@ -126,7 +131,7 @@ export async function generateRenovationVideo(base64Image: string, style: string
     const ai = getGenAI();
 
     let operation = await ai.models.generateVideos({
-      model: "veo-3.1-generate-preview",
+      model: "veo-3.1-lite-generate-preview",
       prompt: `Cinematic interior walkthrough video of a space with ${style} finishes. The camera moves slowly forward through the room. Photorealistic, architectural magazine quality.`,
       image: {
         imageBytes: data,
@@ -182,11 +187,10 @@ export async function generateVisual(options: ImageGenOptions) {
 
     const genAI = getGenAI();
     const response = await genAI.models.generateContent({
-      model: "gemini-3-pro-image-preview",
+      model: "gemini-2.5-flash-image",
       contents,
       config: {
         imageConfig: {
-          imageSize: options.imageSize,
           aspectRatio: options.aspectRatio || "1:1",
         },
       },

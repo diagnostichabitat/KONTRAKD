@@ -1,0 +1,283 @@
+{
+  "nav": {
+    "demo": "Démo",
+    "howItWorks": "Fonctionnement",
+    "contact": "Vérifier ma ville",
+    "results": "Résultats",
+    "benefits": "Bénéfices",
+    "pricing": "Tarifs"
+  },
+  "common": {
+    "yes": "OUI",
+    "no": "NON"
+  },
+  "hero": {
+    "badge": "1 SEUL ARTISAN PAR VILLE. C'EST TOUT.",
+    "availability": "Lyon : PRIS. CHERCHEZ UNE AUTRE VILLE.",
+    "title": "Montrez à votre client le résultat fini.",
+    "titleAccent": "Avant même de lui envoyer un devis.",
+    "description": "Vos clients voient le résultat en 8 secondes. Ils signent le jour même. Pas dans 3 semaines.",
+    "testLead": "Testez ici — c'est ce que voit votre client.",
+    "cta": "VOIR LA DÉMO",
+    "trusted": "Déjà confiance en KONTRAKD"
+  },
+  "benefitsBox": {
+    "title": "CONSTRUIT POUR L'EXCELLENCE",
+    "pricing": {
+      "title": "Un investissement unique.",
+      "desc": "Pas d'abonnement. Pas de frais cachés. Juste votre domination."
+    }
+  },
+  "demo": {
+    "badge1": "Étape 1/3 — Quel est votre métier ?",
+    "title1": "Votre client va voir son résultat en direct.",
+    "labelCity": "Votre ville",
+    "placeholderCity": "e.g. Nice, France",
+    "badge2": "Étape 2 / 3",
+    "title2": "Nourrir le Moteur",
+    "desc2": "Uploadez une photo du projet actuel.",
+    "uploadTitle": "Uploadez la Source",
+    "uploadDesc": "L'intégrité architecturale est maintenue par défaut.",
+    "orTest": "Ou testez le mécanisme",
+    "useSample": "Utiliser un Échantillon Pro",
+    "badge3": "Étape 3 / 3",
+    "title3": "Commandes Finales",
+    "analysisInProgress": "Analyse en cours...",
+    "scanInProgress": "Scan en cours...",
+    "visionLabel": "Votre vision / Consignes",
+    "visionPlaceholder": "Ex: Gardez les murs, mais mettez un bois plus gris...",
+    "finishLabel": "Choisissez la finition",
+    "transformBtn": "TRANSFORMER LA RÉALITÉ",
+    "industries": {
+      "Flooring": "Parquet",
+      "Kitchen": "Cuisines",
+      "Bathroom": "Salles de Bain",
+      "Painting": "Peinture",
+      "Menuiserie": "Menuiserie"
+    },
+    "styles": {
+      "Flooring": ["Vernis Mat", "Finition Satinée", "Aspect Huilé", "Ponçage à Neuf", "Vitrification Brillante"],
+      "Kitchen": ["Relooking Blanc", "Modernisation Anthracite", "Rénovation Plan de Travail", "Éclat Premium", "Polissage Intégral"],
+      "Bathroom": ["Finition Spa", "Restauration Joints", "Polissage Marbre/Pierre", "Aspect Blanc Neuf"],
+      "Painting": ["Beige Chaleureux", "Gris Contemporain", "Blanc Éclatant", "Teinte Sable", "Finition Mat Profond"],
+      "Menuiserie": ["Restauration de l'Existant", "Ponçage et Vernis", "Changement de Teinte", "Vitrification Meuble/Escalier"]
+    },
+    "intel": {
+      "systemTags": "System Tags",
+      "marketIntel": "Market Intel",
+      "activeIntel": "Intelligence Active"
+    },
+    "loading": {
+      "analysis": "Analyse de l'Architecture...",
+      "impact": "Calcul de l'impact marché...",
+      "generation": "Génération du résultat final...",
+      "osActive": "Intelligence Kontrakd OS Activée..."
+    },
+    "result": {
+      "badge": "Transformation Prête",
+      "title": "Votre projet est terminé",
+      "subtitle": "Débloquez le résultat complet ci-dessous",
+      "ready": "Votre transformation est prête.",
+      "unlock": "Débloquez le résultat haute-fidélité",
+      "imagine": "Imaginer offrir ceci à vos clients",
+      "fullResultTitle": "Voir la transformation complète",
+      "fullResultDesc": "Entrez vos coordonnées pour débloquer votre résultat",
+      "nameLabel": "Nom complet",
+      "namePlaceholder": "Jean-Marc",
+      "phoneLabel": "Téléphone",
+      "phonePlaceholder": "06 12 34 56 78",
+      "emailLabel": "Email Professionnel",
+      "emailPlaceholder": "jm@renovation.fr",
+      "unlockBtn": "DÉBLOQUER MON RÉSULTAT",
+      "proCount": "Professionnels",
+      "instant": "INSTANTANÉ",
+      "boosted": "Conversion boostée",
+      "noSpam": "Zéro spam. Uniquement votre résultat.",
+      "newProject": "Nouveau Projet",
+      "vidBtn": "Vidéo 3D",
+      "generating": "Génération...",
+      "simulatorReady": "Votre simulateur est prêt.",
+      "deployDesc": "Il ne reste qu'à le déployer sur votre Instagram et votre site.",
+      "toolPreview": "Aperçu de votre outil :",
+      "reserveBtn": "Réserver ma ville — Déploiement en 48h",
+      "seeHowItWorks": "Voir d'abord comment ça marche",
+      "freeNoEngagement": "Gratuit. Sans engagement. On regarde ensemble en 20 minutes.",
+      "produced": "Ce que ce système a produit pour Le Parquet Parisien :",
+      "artisans": "1 200 artisans l'utilisent déjà",
+      "signed": "chantiers signés",
+      "generated": "générés",
+      "proven": "PROUVÉ",
+      "field": "Sur le terrain",
+      "deploy": "C'est exactement ce système qu'on déploie maintenant pour vous."
+    }
+  },
+  "benefits": {
+    "badge": "Hier vs Demain",
+    "title": "Pourquoi vous perdez",
+    "titleAccent": "des chantiers que vous méritez.",
+    "description": "Vos clients ne signent pas parce qu'ils n'arrivent pas à imaginer le résultat. Montrez-leur. Le problème disparaît.",
+    "old": {
+      "badge": "Ce que vous faites aujourd'hui",
+      "desc": "Vous envoyez des photos de vos anciens chantiers. Votre client essaie d'imaginer son salon. Il n'y arrive pas. Il ne répond plus.",
+      "items": {
+        "action": { "label": "Action", "val": "Vous envoyez un catalogue" },
+        "prospect": { "label": "Prospect", "val": "Il dit 'je réfléchis'" },
+        "consequence": { "label": "Conséquence", "val": "Il signe chez un concurrent moins cher" },
+        "result": { "label": "Bilan", "val": "Vous perdez de l'argent" }
+      }
+    },
+    "new": {
+      "badge": "Ce qui se passe avec KONTRAKD",
+      "desc": "\"Il voit son propre sol rénové. En 8 secondes.\"",
+      "items": {
+        "engagement": { "label": "Engagement", "val": "Il envoie une photo de son sol à 22h" },
+        "result": { "label": "Résultat", "val": "Il voit le résultat tout de suite" },
+        "decision": { "label": "Décision", "val": "Il vous appelle pour savoir quand vous pouvez venir" },
+        "status": { "label": "Statut", "val": "Il ne demande plus le prix" }
+      },
+      "resultLabel": "Résultat : il signe. Vous travaillez."
+    }
+  },
+  "success": {
+    "badge": "Ça marche vraiment. Voici la preuve.",
+    "title": "Voici ce que",
+    "titleAccent": "ça donne en vrai.",
+    "quote": "\"Le simulateur n'est pas un gadget. C'est ce qui fait qu'un client arrête de chercher ailleurs et m'appelle moi.\"",
+    "stats": {
+      "views": "500 000",
+      "viewsDesc": "vues en 6 mois",
+      "rate": "+64%",
+      "rateDesc": "de clients qui signent"
+    },
+    "aziz": {
+      "quote": "\"En 6 mois, 500 000 vues organiques. Des chantiers qui se remplissent pendant que je pose du bois.\"",
+      "location": "Chantier commercial 400m², Luxembourg",
+      "status": "Signé après simulation · Showroom Micadoni"
+    },
+    "content": {
+      "p1": "Le Parquet Parisien envoie le simulateur avant même de rappeler le client.",
+      "p2": "Pourquoi expliquer pendant 1h quand votre client peut voir le résultat en 8 secondes ?",
+      "p2Highlight": "voir le résultat"
+    },
+    "cta": {
+      "live": "VOIR LE SIMULATEUR LIVE",
+      "instagram": "VOIR L'INSTAGRAM"
+    }
+  },
+  "recommender": {
+    "badge1": "Pour quel métier ?",
+    "badge2": "DÉTECTION DE FRICTION",
+    "title2": "Quelle Incertitude vous tue ?",
+    "badge3": "INFRASTRUCTURE DIGITALE",
+    "title3": "Votre Présence Actuelle",
+    "hasSite": "Avez-vous un site ?",
+    "runsAds": "Lancez-vous de la pub ?",
+    "badge4": "ANALYSE TERRITORIALE",
+    "title4": "Secteur à bloquer ?",
+    "checkCity": "Vérification en temps réel de votre ville.",
+    "cityPlaceholder": "Ex: Paris, Lyon, Bordeaux...",
+    "auditBtn": "LANCER L'AUDIT DE MARCHÉ",
+    "loadingAudit": "Moteur d'Audit Neural Activé",
+    "analyzing": "Analyse de la concurrence à {city}...",
+    "diagnosticUnlocked": "Diagnostic Stratégique Débloqué",
+    "yourAudit": "Votre Audit Stratégique",
+    "secureExclusivity": "SÉCURISER CETTE EXCLUSIVITÉ",
+    "available": "Accord Territorial Disponible",
+    "auditInsights": "Détails de l'Audit",
+    "matchScore": "Score de Match",
+    "urgency": "Urgence",
+    "urgencyLevel": "CRITIQUE",
+    "summary": "En analysant le marché de **{city}**, votre profil d'expert en **{business}** ne peut plus se permettre d'être comparé. Vous avez besoin d'une approche **{recommendation}** pour briser le plafond actuel.",
+    "recDomination": "Agressive de Domination",
+    "recArtisan": "Chirurgicale de Signature",
+    "problems": {
+      "hesitation": { "label": "Le client hésite & compare", "desc": "La mort lente du deal par le doute" },
+      "quotes": { "label": "Volume de devis fantômes", "desc": "Travail gratuit sans signature finale" },
+      "justify": { "label": "Négociation agressive", "desc": "Le client ne voit pas la valeur ajoutée" },
+      "loss": { "label": "Concurrence déloyale", "desc": "Perdre face aux moins qualifiés" }
+    }
+  },
+  "howItWorks": {
+    "badge": "MÉTHODE KONTRAKD",
+    "title": "VOTRE NOUVEAU",
+    "titleAccent": "SYSTÈME DE VENTE",
+    "steps": [
+      { "num": "01", "step": "On apprend votre métier", "desc": "On entre vos matériaux et vos finitions dans le système." },
+      { "num": "02", "step": "On installe tout", "desc": "Sur votre site et vos réseaux. Prêt en 48h." },
+      { "num": "03", "step": "Vos clients testent", "desc": "Ils uploadent une photo. Ils voient leur résultat." },
+      { "num": "04", "step": "Vous signez", "desc": "Le client arrive déjà convaincu. Vous validez la date." }
+    ],
+    "faq": {
+      "title": "Vos questions",
+      "q1": "\"Est-ce que mes clients vont vraiment utiliser ça ?\"",
+      "a1": "Oui. Tout le monde cherche déjà son résultat sur Pinterest et YouTube. Vous leur donnez juste le vrai résultat, chez eux, maintenant.",
+      "q2": "\"Est-ce que le résultat ressemble vraiment à mon travail ?\"",
+      "a2": "Oui. On entre vos matériaux exacts, vos finitions, vos couleurs. Ce n'est pas une image générique. C'est votre catalogue.",
+      "q3": "\"Combien ça coûte ?\"",
+      "a3": "Un seul chantier signé grâce à l'outil rembourse 2 ans d'abonnement. On en parle en 20 minutes.",
+      "exclTitle": "Territoire Exclusif :",
+      "exclDesc": "Votre ville est à vous. Votre concurrent ne peut pas utiliser notre système sur votre territoire. Un artisan par ville. C'est la règle."
+    }
+  },
+  "cta": {
+    "title": "PRÊT À DOMINER",
+    "titleAccent": "VOTRE SECTEUR ?",
+    "desc": "Une seule licence par ville. Ne laissez pas votre concurrent la prendre avant vous.",
+    "btn": "Vérifier la disponibilité"
+  },
+  "pricing": {
+    "title": "VOTRE INVESTISSEMENT",
+    "desc1": "\"1 chantier signé rembourse l'investissement. Tout le reste, c'est du bénéfice net.\"",
+    "plans": {
+      "artisan": {
+        "title": "LANCEUR",
+        "price": "1 500€",
+        "sub": "/mois",
+        "availability": "+ budget pub client (min 300€/mois)",
+        "features": [
+          "Google Ads",
+          "Landing page dédiée",
+          "Qualification des leads",
+          "Rapport hebdomadaire",
+          "Exclusivité territoriale"
+        ],
+        "btn": "Vérifier ma ville"
+      },
+      "dominateur": {
+        "title": "DOMINATEUR",
+        "price": "2 500€",
+        "sub": "/mois",
+        "availability": "LE PLUS POPULAIRE",
+        "features": [
+          "Tout Lanceur",
+          "Simulateur IA déployé sur Instagram et site",
+          "Stratégie contenu Instagram",
+          "Scripts de suivi client",
+          "Garantie 5 visites en 30 jours ou premier mois offert"
+        ],
+        "btn": "Je prends ma ville"
+      },
+      "empire": {
+        "title": "EMPIRE",
+        "price": "3 500€",
+        "sub": "/mois",
+        "availability": "+ budget pub client (min 800€/mois)",
+        "features": [
+          "Tout Dominateur",
+          "TikTok intégré",
+          "Calendrier contenu complet",
+          "Accès prioritaire leads RenoScan",
+          "Appel stratégie mensuel"
+        ],
+        "btn": "Parler à Aziz"
+      }
+    }
+  },
+  "industries": {
+    "parquet": "Parquet",
+    "cuisines": "Cuisines",
+    "bains": "Bains",
+    "peinture": "Peinture",
+    "carpentry": "Menuiserie"
+  }
+}

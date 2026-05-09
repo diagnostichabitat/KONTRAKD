@@ -5,12 +5,13 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { Upload, Paintbrush, ArrowRight, Loader2, Sparkles, CheckCircle2, X, MapPin, MessageSquare, Video, Play, Maximize2 } from "lucide-react";
+import { Upload, Paintbrush, ArrowRight, Loader2, Sparkles, CheckCircle2, X, MapPin, MessageSquare, Video, Play, Maximize2, Instagram } from "lucide-react";
 import { generateVisual, analyzeSpaceAdvanced, getLocalRenovationIntelligence, generateRenovationVideo } from "@/lib/gemini";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "@/contexts/LanguageContext";
 import Markdown from "react-markdown";
 
-type Industry = "Flooring" | "Kitchen" | "Bathroom" | "Painting" | "Cleaning";
+type Industry = "Flooring" | "Kitchen" | "Bathroom" | "Painting" | "Menuiserie";
 
 interface IndustryConfig {
   id: Industry;
@@ -45,22 +46,23 @@ const INDUSTRIES: IndustryConfig[] = [
     prompt: "living room with freshly painted walls" 
   },
   { 
-    id: "Cleaning", 
-    label: "Nettoyage", 
-    image: "https://i.postimg.cc/HLf7Rf2K/Bond-Cleaning-New-Farm.avif", 
-    prompt: "organized home space" 
+    id: "Menuiserie", 
+    label: "Menuiserie", 
+    image: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?q=80&w=800&auto=format&fit=crop", 
+    prompt: "custom wood carpentry and detailed woodwork in a modern home" 
   },
 ];
 
 const STYLES: Record<Industry, string[]> = {
-  Flooring: ["Chêne Mat", "Noyer Satiné", "Teck Brillant", "Chêne Clair", "Noyer Sombre"],
-  Kitchen: ["Minimaliste Moderne", "Classique Shaker", "Loft Industriel", "Noir Épuré", "Blanc Pur"],
-  Bathroom: ["Marbre de Luxe", "Ardoise Contemporaine", "Spa Chaleureux", "Blanc Minimaliste"],
-  Painting: ["Beige Chaleureux", "Gris Frais", "Vert Forêt", "Bleu Nuit", "Blanc Mat"],
-  Cleaning: ["Nettoyage Profond", "Élimination des Taches", "Mode Organisation"],
+  Flooring: ["Vernis Mat", "Finition Satinée", "Aspect Huilé", "Ponçage à Neuf", "Vitrification Brillante"],
+  Kitchen: ["Relooking Blanc", "Modernisation Anthracite", "Rénovation Plan de Travail", "Éclat Premium", "Polissage Intégral"],
+  Bathroom: ["Finition Spa", "Restauration Joints", "Polissage Marbre/Pierre", "Aspect Blanc Neuf"],
+  Painting: ["Beige Chaleureux", "Gris Contemporain", "Blanc Éclatant", "Teinte Sable", "Finition Mat Profond"],
+  Menuiserie: ["Restauration de l'Existant", "Ponçage et Vernis", "Changement de Teinte", "Vitrification Meuble/Escalier"],
 };
 
 export function Demo() {
+  const { t } = useTranslation();
   const [step, setStep] = React.useState(1);
   const [leadCaptured, setLeadCaptured] = React.useState(false);
   const [leadData, setLeadData] = React.useState({ name: "", email: "", phone: "" });
@@ -71,7 +73,7 @@ export function Demo() {
   const [style, setStyle] = React.useState<string>(STYLES.Flooring[0]);
   const [isGenerating, setIsGenerating] = React.useState(false);
   const [isGeneratingVideo, setIsGeneratingVideo] = React.useState(false);
-  const [loadingText, setLoadingText] = React.useState("Analyse de l'espace...");
+  const [loadingText, setLoadingText] = React.useState<"analysis" | "impact" | "generation">("analysis");
   const [diagnostics, setDiagnostics] = React.useState<string | null>(null);
   const [localTrends, setLocalTrends] = React.useState<string | null>(null);
   const [result, setResult] = React.useState<string | null>(null);
@@ -85,7 +87,7 @@ export function Demo() {
     Kitchen: "https://i.postimg.cc/FRgwwQvd/hbx050123napiers-005-preview-642dcd73da1ca.avif",
     Bathroom: "https://i.postimg.cc/02NhX3Bj/Qube-Wall-Mounted-Pebble-Grey-Gloss.jpg",
     Painting: "https://i.postimg.cc/y8M5dNYd/183805968-s.jpg",
-    Cleaning: "https://i.postimg.cc/HLf7Rf2K/Bond-Cleaning-New-Farm.avif",
+    Menuiserie: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?q=80&w=800&auto=format&fit=crop",
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,7 +101,7 @@ export function Demo() {
         
         // Start intelligent processing immediately
         setIsGenerating(true);
-        setLoadingText("Diagnostic IA...");
+        setLoadingText("analysis");
         try {
           const analysis = await analyzeSpaceAdvanced(base64, industry);
           setDiagnostics(analysis);
@@ -155,7 +157,7 @@ export function Demo() {
     setResult(null);
 
     try {
-      setLoadingText("Analyse de l'Architecture...");
+      setLoadingText("analysis");
       
       let analysisResult: any;
       if (storedAnalysis && typeof storedAnalysis === 'object' && storedAnalysis.system_tags) {
@@ -169,21 +171,44 @@ export function Demo() {
       await new Promise(r => setTimeout(r, 2000));
 
       // Reveal Market Intel (2-4s)
-      setLoadingText("Calcul de l'impact marché...");
+      setLoadingText("impact");
       setLocalTrends(analysisResult.market_intel.join(" • "));
       await new Promise(r => setTimeout(r, 2000));
 
-      setLoadingText("Génération du résultat final...");
+      setLoadingText("generation");
       
+      const analysisContext = analysisResult?.system_tags?.join(". ") || "";
+      const RENOVATION_DNA = `
+        YOU ARE A PROFESSIONAL RENOVATION VISUALIZATION AI FOR KONTRAKD.
+        MISSION: Create a PHOTOREALISTIC "AFTER RENOVATION" version of the EXACT SAME space.
+        
+        CRITICAL RULES:
+        1. PRESERVE ROOM IDENTITY: Exact same structure, architecture, perspective, camera angle, proportions, and dimensions.
+        2. NO REDESIGN: Do not modernize, do not replace materials, do not invent new textures.
+        3. LAYOUT INTEGRITY: Keep all furniture, lighting, and architectural details 100% IDENTICAL to the source.
+        4. FLOOR PRESERVATION: Keep exact same flooring type, wood species, grain, parquet pattern, and plank orientation.
+        5. ALLOWED ACTIONS: Remove scratches/stains, repair damaged zones, simulate professional sanding/polishing, restore shine and cleanliness.
+        
+        NEGATIVE CONSTRAINTS: NO new floor, NO different wood, NO luxury redesign, NO Pinterest fantasy, NO hallucinated furniture.
+        
+        ANALYSIS OF SOURCE: ${analysisContext}.
+        USER REQUEST: ${userInstructions}.
+      `;
+
       const tradePrompts: Record<string, string> = {
-        "Flooring": `Edit ONLY the floor surface. Replace with ${style} wood flooring. Keep ALL walls, furniture, objects, ceiling, lighting, shadows, perspective IDENTICAL. Photorealistic renovation result. Same room, same angle, same everything except the floor.`,
-        "Kitchen": `Full premium kitchen remodel in ${style} style. Redesign all cabinetry, countertops, and hardware. CRITICAL: Keep structural elements (windows, doors, entryways, ceiling layout) 100% IDENTICAL to the source. Photorealistic hospitality-grade interior.`,
-        "Bathroom": `Full luxury bathroom remodel in ${style} style. Replace all tiles, vanity, and plumbing fixtures. CRITICAL: Maintain exact structural anchors—windows, doors, and floorplan positions must remain identical to the original photo. Photorealistic spa-grade render.`,
-        "Painting": `Edit ONLY the wall color and surface finish. Apply ${style} paint finish. Keep all furniture, floor, ceiling, lighting, objects IDENTICAL. Photorealistic interior painting result. Same room, new walls only.`,
-        "Cleaning": `Show this exact space professionally cleaned and restored. Remove all dirt, stains, clutter. Keep all structural elements IDENTICAL. Before/after professional cleaning result.`
+        "Flooring": `${RENOVATION_DNA} 
+        ACTION: Restore the existing floor to a perfect ${style} finish. Maintain the original wood or tiling pattern EXACTLY. Focus on technical surface restoration.`,
+        "Kitchen": `${RENOVATION_DNA} 
+        ACTION: Renovate/refresh existing cabinet surfaces and countertops with a ${style} treatment. Keep the exact same kitchen layout and cabinet structure.`,
+        "Bathroom": `${RENOVATION_DNA} 
+        ACTION: Professional deep clean and restoration of existing tiles and fixtures to a ${style} state. Zero layout changes.`,
+        "Painting": `${RENOVATION_DNA} 
+        ACTION: Repaint original walls with a high-quality ${style} finish. Maintain all trim, moldings, and window frames exactly as they are.`,
+        "Menuiserie": `${RENOVATION_DNA} 
+        ACTION: Restoration of the existing woodwork (stairs, paneling, built-ins) with a professional ${style} finish. Technical restoration only.`
       };
 
-      const prompt = tradePrompts[industry] || `High-end renovation of the space using ${style} finish. Photorealistic interior.`;
+      const prompt = (tradePrompts[industry] || `${RENOVATION_DNA} High-end restoration in ${style} style.`) + " RESULT MUST BE ARCHITECTURAL PHOTOGRAPHY OF A RESTORED SPACE. NO REDESIGN.";
 
       const generatedImage = await generateVisual({
         prompt,
@@ -209,19 +234,19 @@ export function Demo() {
         return (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
             <div className="text-center space-y-2">
-              <Badge variant="outline" className="text-accent border-accent/20">Étape 1/3 — Quel est votre métier ?</Badge>
-              <h3 className="text-2xl font-display font-bold">Votre client va voir son résultat en direct.</h3>
+              <Badge variant="outline" className="text-accent border-accent/20">{t("demo.badge1")}</Badge>
+              <h3 className="text-2xl font-display font-bold">{t("demo.title1")}</h3>
             </div>
             
             <div className="space-y-3">
               <Label className="text-[10px] uppercase font-bold text-muted-foreground flex items-center gap-2">
-                <MapPin size={10} className="text-accent" /> Votre ville
+                <MapPin size={10} className="text-accent" /> {t("demo.labelCity")}
               </Label>
               <input 
                 type="text"
                 value={region}
                 className="w-full bg-muted/20 border-muted rounded-lg px-4 py-2 text-xs focus:ring-1 focus:ring-accent outline-none"
-                placeholder="e.g. Nice, France"
+                placeholder={t("demo.placeholderCity")}
                 onChange={(e) => setRegion(e.target.value)}
               />
             </div>
@@ -244,9 +269,9 @@ export function Demo() {
                   <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent group-hover:from-black/60 transition-colors" />
                   <div className="relative p-6 h-full flex items-center justify-between">
                     <div className="space-y-1">
-                      <span className="text-white font-black text-xl uppercase tracking-tighter block">{ind.label}</span>
+                      <span className="text-white font-black text-xl uppercase tracking-tighter block">{t(`demo.industries.${ind.id}`)}</span>
                       <p className="text-white/60 text-[8px] font-bold uppercase tracking-widest italic flex items-center gap-1">
-                        <Sparkles size={8} className="text-accent" /> Intelligence Active
+                        <Sparkles size={8} className="text-accent" /> {t("demo.intel.activeIntel")}
                       </p>
                     </div>
                     <ArrowRight className="text-white opacity-0 group-hover:opacity-100 -translate-x-3 group-hover:translate-x-0 transition-all duration-300" size={24} />
@@ -261,9 +286,9 @@ export function Demo() {
         return (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
             <div className="text-center space-y-2">
-              <Badge variant="outline" className="text-accent border-accent/20">Étape 2 / 3</Badge>
-              <h3 className="text-2xl font-display font-bold">Nourrir le Moteur</h3>
-              <p className="text-muted-foreground text-sm">Uploadez une photo du projet actuel.</p>
+              <Badge variant="outline" className="text-accent border-accent/20">{t("demo.badge2")}</Badge>
+              <h3 className="text-2xl font-display font-bold">{t("demo.title2")}</h3>
+              <p className="text-muted-foreground text-sm">{t("demo.desc2")}</p>
             </div>
             
             <input 
@@ -282,14 +307,14 @@ export function Demo() {
                 <Upload size={32} />
               </div>
               <div className="space-y-2">
-                <p className="font-black text-xl">Uploadez la Source</p>
-                <p className="text-xs text-muted-foreground uppercase tracking-widest font-bold">L'intégrité architecturale est maintenue par défaut.</p>
+                <p className="font-black text-xl">{t("demo.uploadTitle")}</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-widest font-bold">{t("demo.uploadDesc")}</p>
               </div>
             </div>
 
             <div className="relative">
               <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-muted" /></div>
-              <div className="relative flex justify-center text-[10px] uppercase"><span className="bg-background px-2 text-muted-foreground font-bold italic">Ou testez le mécanisme</span></div>
+              <div className="relative flex justify-center text-[10px] uppercase"><span className="bg-background px-2 text-muted-foreground font-bold italic">{t("demo.orTest")}</span></div>
             </div>
 
             <Button
@@ -300,7 +325,7 @@ export function Demo() {
                 setStep(3);
               }}
             >
-              Utiliser un Échantillon Pro
+              {t("demo.useSample")}
             </Button>
           </motion.div>
         );
@@ -309,26 +334,26 @@ export function Demo() {
         return (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
             <div className="text-center space-y-1">
-              <Badge variant="outline" className="text-accent border-accent/20">Étape 3 / 3</Badge>
-              <h3 className="text-2xl font-display font-bold">Commandes Finales</h3>
+              <Badge variant="outline" className="text-accent border-accent/20">{t("demo.badge3")}</Badge>
+              <h3 className="text-2xl font-display font-bold">{t("demo.title3")}</h3>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               <div className="flex-1 bg-muted/30 rounded-xl p-3 border border-muted/50">
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-[9px] font-black uppercase tracking-widest text-accent flex items-center gap-2">
-                    <Sparkles size={10} /> System Tags
+                    <Sparkles size={10} /> {t("demo.intel.systemTags")}
                   </p>
                   {isGenerating && <Loader2 size={10} className="animate-spin text-accent" />}
                 </div>
                 <div className="text-[10px] font-mono text-muted-foreground line-clamp-2 md:line-clamp-none">
-                  <Markdown>{diagnostics ? (typeof diagnostics === 'object' ? (diagnostics as any).system_tags.join(' • ') : diagnostics) : "Analyse en cours..."}</Markdown>
+                  <Markdown>{diagnostics ? (typeof diagnostics === 'object' ? (diagnostics as any).system_tags.join(' • ') : diagnostics) : t("demo.analysisInProgress")}</Markdown>
                 </div>
               </div>
               <div className="flex-1 bg-accent/5 rounded-xl p-3 border border-accent/10">
-                <p className="text-[9px] font-black uppercase tracking-widest text-accent mb-2 underline">Market Intel</p>
+                <p className="text-[9px] font-black uppercase tracking-widest text-accent mb-2 underline">{t("demo.intel.marketIntel")}</p>
                 <div className="text-[10px] font-mono italic text-muted-foreground line-clamp-2 md:line-clamp-none">
-                  <Markdown>{localTrends ? (typeof localTrends === 'object' ? (localTrends as any).market_intel.join(' • ') : localTrends) : "Scan en cours..."}</Markdown>
+                  <Markdown>{localTrends ? (typeof localTrends === 'object' ? (localTrends as any).market_intel.join(' • ') : localTrends) : t("demo.scanInProgress")}</Markdown>
                 </div>
               </div>
             </div>
@@ -346,11 +371,11 @@ export function Demo() {
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label className="text-[10px] uppercase font-bold text-muted-foreground flex items-center gap-2">
-                  <MessageSquare size={12} className="text-accent" /> Votre vision / Consignes
+                  <MessageSquare size={12} className="text-accent" /> {t("demo.visionLabel")}
                 </Label>
                 <textarea 
                   className="w-full h-20 bg-muted/20 border-muted rounded-xl p-3 text-xs focus:ring-1 focus:ring-accent outline-none resize-none"
-                  placeholder="Ex: Gardez les murs, mais mettez un bois plus gris..."
+                  placeholder={t("demo.visionPlaceholder")}
                   value={userInstructions}
                   onChange={(e) => setUserInstructions(e.target.value)}
                 />
@@ -358,10 +383,10 @@ export function Demo() {
 
               <div className="space-y-3">
                 <Label className="text-[10px] uppercase font-bold text-muted-foreground flex items-center gap-2">
-                  <Paintbrush size={12} className="text-accent" /> Choisissez la finition
+                  <Paintbrush size={12} className="text-accent" /> {t("demo.finishLabel")}
                 </Label>
                 <div className="grid grid-cols-2 gap-2">
-                  {STYLES[industry].map((s) => (
+                  {(t(`demo.styles.${industry}`, { returnObjects: true }) as string[]).map((s) => (
                     <button
                       key={s}
                       className={cn(
@@ -381,7 +406,7 @@ export function Demo() {
             </div>
 
             <Button className="w-full bg-accent hover:bg-accent/90 py-6 text-lg font-black group shadow-xl shadow-accent/20" onClick={handleGenerate} disabled={isGenerating}>
-              TRANSFORMER LA RÉALITÉ
+              {t("demo.transformBtn")}
               <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
           </motion.div>
@@ -397,8 +422,8 @@ export function Demo() {
               </div>
             </div>
             <div className="text-center space-y-3">
-              <h4 className="text-xl font-black font-display uppercase tracking-tight">{loadingText}</h4>
-              <p className="text-xs text-muted-foreground animate-pulse font-mono">Intelligence Kontrakd OS Activée...</p>
+              <h4 className="text-xl font-black font-display uppercase tracking-tight">{t(`demo.loading.${loadingText}`)}</h4>
+              <p className="text-xs text-muted-foreground animate-pulse font-mono">{t("demo.loading.osActive")}</p>
               
               {/* Dynamic reveal bars */}
               {(diagnostics || localTrends) && (
@@ -423,9 +448,9 @@ export function Demo() {
         return (
           <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="space-y-6">
             <div className="text-center space-y-1">
-              <Badge variant="outline" className="bg-accent/10 text-accent border-accent/20 animate-pulse">Transformation Prête</Badge>
-              <h3 className="text-xl font-display font-bold">Votre projet est terminé</h3>
-              <p className="text-muted-foreground text-[10px] uppercase font-black">Débloquez le résultat complet ci-dessous</p>
+              <Badge variant="outline" className="bg-accent/10 text-accent border-accent/20 animate-pulse">{t("demo.result.badge")}</Badge>
+              <h3 className="text-xl font-display font-bold">{t("demo.result.title")}</h3>
+              <p className="text-muted-foreground text-[10px] uppercase font-black">{t("demo.result.subtitle")}</p>
             </div>
 
             {/* Partial Result View */}
@@ -439,14 +464,14 @@ export function Demo() {
                   <div className="bg-accent p-3 rounded-full mb-4 shadow-2xl">
                     <Loader2 size={32} className="text-white animate-spin" />
                   </div>
-                  <p className="text-white font-black text-lg uppercase italic tracking-tight">Votre transformation est prête.</p>
-                  <p className="text-white/80 text-[10px] font-bold uppercase tracking-widest mt-2">Débloquez le résultat haute-fidélité</p>
+                  <p className="text-white font-black text-lg uppercase italic tracking-tight">{t("demo.result.ready")}</p>
+                  <p className="text-white/80 text-[10px] font-bold uppercase tracking-widest mt-2">{t("demo.result.unlock")}</p>
                 </div>
               )}
               
               {leadCaptured && (
                 <div className="absolute top-4 left-4 z-20">
-                   <div className="bg-accent text-white px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">Imaginer offrir ceci à vos clients</div>
+                   <div className="bg-accent text-white px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">{t("demo.result.imagine")}</div>
                 </div>
               )}
             </div>
@@ -454,27 +479,27 @@ export function Demo() {
             {!leadCaptured ? (
               <Card className="p-6 space-y-6 border-accent bg-accent/5 relative overflow-hidden">
                 <div className="space-y-2 text-center relative z-10">
-                  <h4 className="text-xl font-display font-black uppercase">Voir la transformation complète</h4>
-                  <p className="text-xs text-muted-foreground">Entrez vos coordonnées pour débloquer votre résultat</p>
+                  <h4 className="text-xl font-display font-black uppercase">{t("demo.result.fullResultTitle")}</h4>
+                  <p className="text-xs text-muted-foreground">{t("demo.result.fullResultDesc")}</p>
                 </div>
 
                 <div className="space-y-3 relative z-10">
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1">
-                      <Label className="text-[10px] uppercase font-bold text-muted-foreground">Nom complet</Label>
+                      <Label className="text-[10px] uppercase font-bold text-muted-foreground">{t("demo.result.nameLabel")}</Label>
                       <input 
                         type="text" 
-                        placeholder="Jean-Marc" 
+                        placeholder={t("demo.result.namePlaceholder")} 
                         className="w-full bg-background border-muted rounded-lg px-3 py-2 text-xs" 
                         value={leadData.name}
                         onChange={e => setLeadData({...leadData, name: e.target.value})}
                       />
                     </div>
                     <div className="space-y-1">
-                      <Label className="text-[10px] uppercase font-bold text-muted-foreground">Téléphone</Label>
+                      <Label className="text-[10px] uppercase font-bold text-muted-foreground">{t("demo.result.phoneLabel")}</Label>
                       <input 
                         type="tel" 
-                        placeholder="06 12 34 56 78" 
+                        placeholder={t("demo.result.phonePlaceholder")} 
                         className="w-full bg-background border-muted rounded-lg px-3 py-2 text-xs" 
                         value={leadData.phone}
                         onChange={e => setLeadData({...leadData, phone: e.target.value})}
@@ -482,10 +507,10 @@ export function Demo() {
                     </div>
                   </div>
                   <div className="space-y-1">
-                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Email Professionnel</Label>
+                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">{t("demo.result.emailLabel")}</Label>
                     <input 
                       type="email" 
-                      placeholder="jm@renovation.fr" 
+                      placeholder={t("demo.result.emailPlaceholder")} 
                       className="w-full bg-background border-muted rounded-lg px-3 py-2 text-xs" 
                       value={leadData.email}
                       onChange={e => setLeadData({...leadData, email: e.target.value})}
@@ -502,23 +527,23 @@ export function Demo() {
                     }
                   }}
                 >
-                  DÉBLOQUER MON RÉSULTAT
+                  {t("demo.result.unlockBtn")}
                   <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
 
                 <div className="flex items-center justify-center gap-6 pt-2 border-t border-muted/20 relative z-10">
                   <div className="flex flex-col items-center">
                     <span className="text-[10px] font-black text-accent">1,200+</span>
-                    <span className="text-[8px] uppercase font-bold text-muted-foreground">Professionnels</span>
+                    <span className="text-[8px] uppercase font-bold text-muted-foreground">{t("demo.result.proCount")}</span>
                   </div>
                   <div className="w-[1px] h-4 bg-muted/20" />
                   <div className="flex flex-col items-center">
-                    <span className="text-[10px] font-black text-accent">INSTANTANÉ</span>
-                    <span className="text-[8px] uppercase font-bold text-muted-foreground">Conversion boostée</span>
+                    <span className="text-[10px] font-black text-accent">{t("demo.result.instant")}</span>
+                    <span className="text-[8px] uppercase font-bold text-muted-foreground">{t("demo.result.boosted")}</span>
                   </div>
                 </div>
 
-                <p className="text-[8px] text-center text-muted-foreground relative z-10">Zéro spam. Uniquement votre résultat.</p>
+                <p className="text-[8px] text-center text-muted-foreground relative z-10">{t("demo.result.noSpam")}</p>
               </Card>
             ) : (
               <div className="space-y-5">
@@ -570,12 +595,12 @@ export function Demo() {
                     {isGeneratingVideo ? (
                       <>
                         <Loader2 size={16} className="animate-spin mr-2" />
-                        Génération...
+                        {t("demo.result.generating")}
                       </>
                     ) : (
                       <>
                         <Video size={16} className="mr-2 group-hover:scale-110 transition-transform" />
-                        Vidéo 3D
+                        {t("demo.result.vidBtn")}
                       </>
                     )}
                   </Button>
@@ -584,18 +609,41 @@ export function Demo() {
                     className="h-12 border-muted hover:bg-muted/50 font-bold text-xs uppercase tracking-widest text-muted-foreground"
                     onClick={() => { setStep(1); setResult(null); setImage(null); setVideoUrl(null); setLeadCaptured(false); }}
                   >
-                    Nouveau Projet
+                    {t("demo.result.newProject")}
                   </Button>
                 </div>
 
-                <div className="py-4 text-center space-y-4">
-                   <div className="p-4 bg-accent/5 border border-accent/10 rounded-2xl">
-                      <p className="text-accent font-black text-lg uppercase italic tracking-tight">Votre client vient de voir son résultat.</p>
-                      <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest">Signez maintenant.</p>
+                <div className="py-8 text-center space-y-8">
+                   <div className="space-y-4">
+                      <h4 className="text-3xl font-display font-black uppercase italic tracking-tighter">{t("demo.result.simulatorReady")}</h4>
+                      <p className="text-muted-foreground text-sm font-medium">{t("demo.result.deployDesc")}</p>
                    </div>
-                   <Button className="w-full bg-accent hover:bg-accent/90 py-8 text-sm md:text-lg font-black shadow-2xl shadow-accent/25 uppercase tracking-tight italic whitespace-normal h-auto leading-tight" onClick={() => window.location.href = '#pricing'}>
-                    DÉPLOYER CECI DANS MON ENTREPRISE
-                  </Button>
+                   
+                   <div className="p-6 bg-accent/5 border border-accent/20 rounded-3xl relative overflow-hidden group">
+                      <div className="absolute top-0 right-0 p-4 opacity-10"><Instagram size={40} /></div>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-accent mb-4 text-left">{t("demo.result.toolPreview")}</p>
+                      <div className="aspect-video bg-ink rounded-xl border border-white/10 flex items-center justify-center p-4">
+                        <div className="text-center space-y-2">
+                          <p className="font-display font-black text-white text-xs uppercase tracking-tight">SIMULATEUR IA {t(`demo.industries.${industry}`).toUpperCase()}</p>
+                          <p className="text-accent text-[8px] font-bold uppercase tracking-widest">{region.toUpperCase()}</p>
+                        </div>
+                      </div>
+                   </div>
+
+                   <div className="space-y-4">
+                    <Button className="w-full h-16 md:h-20 bg-accent hover:bg-accent/90 text-sm md:text-lg font-black shadow-2xl shadow-accent/25 uppercase tracking-tight italic" onClick={() => window.location.href = 'https://cal.com/kontrakd/verifier-ma-ville'}>
+                      {t("demo.result.reserveBtn")}
+                    </Button>
+                    <Button variant="ghost" className="w-full text-muted-foreground hover:bg-transparent hover:text-white font-bold uppercase tracking-widest text-xs" onClick={() => {
+                        const worksElement = document.getElementById('how-it-works');
+                        if (worksElement) worksElement.scrollIntoView({ behavior: 'smooth' });
+                    }}>
+                      {t("demo.result.seeHowItWorks")} →
+                    </Button>
+                    <p className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest italic">
+                      {t("demo.result.freeNoEngagement")}
+                    </p>
+                   </div>
                 </div>
               </div>
             )}
